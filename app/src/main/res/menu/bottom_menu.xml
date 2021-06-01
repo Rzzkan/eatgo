@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/ic_baseline_dashboard_24"
+        android:title="Dashboard" />
+
+    <item
+        android:id="@+id/nav_all_user"
+        android:icon="@drawable/ic_baseline_people_24"
+        android:title="All Users" />
+
+    <item
+        android:id="@+id/nav_all_resto"
+        android:icon="@drawable/ic_baseline_store_24"
+        android:title="All Restaurant" />
+
+
+    <item
+        android:id="@+id/nav_chat"
+        android:icon="@drawable/ic_baseline_chat"
+        android:title="Chat" />
+
+    <item
+        android:id="@+id/nav_account"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Account" />
+</menu>

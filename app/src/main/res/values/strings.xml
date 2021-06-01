@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Eatgo - Live Restaurant Daeals</string>
+    <string name="register_title">Registration</string>
+    <string name="update_pw_title">Update Password</string>
+    <string name="profile_title">Profile</string>
+    <string name="update_profile_title">Update Profile</string>
+    <string name="update_profile_resto_title">Update Restaurant</string>
+    <string name="all_resto_title">All Restaurant</string>
+    <string name="detail_resto_title">Detail Restaurant</string>
+    <string name="all_users_title">All Users</string>
+    <string name="detail_users_title">Detail Users</string>
+    <string name="all_menu_title">All Menus</string>
+    <string name="detail_menu_title">Detail Menu</string>
+    <string name="add_menu_title">Add Menu</string>
+    <string name="update_menu_title">Update Menu</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+
+
+    <string name="lbl_set_profile_photo">Set Photo</string>
+    <string name="lbl_take_camera_picture">Take Image</string>
+    <string name="lbl_choose_from_gallery">Pick From Galery</string>
+    <string name="toast_image_intent_null">Not Found</string>
+    <string name="dialog_permission_title">Give Access</string>
+    <string name="dialog_permission_message">This app requires permission to use this feature. You can provide them in the application settings.</string>
+    <string name="go_to_settings">To Settigs</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
