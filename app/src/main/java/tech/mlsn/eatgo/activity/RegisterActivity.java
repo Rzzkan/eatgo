@@ -68,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
         rbUser = findViewById(R.id.rbUser);
         rbResto = findViewById(R.id.rbResto);
         btnRegister = findViewById(R.id.btnRegister);
+        rgRole.check(R.id.rbUser);
     }
 
     private void btnListener(){
@@ -112,9 +113,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response.body().getSuccess()==1) {
-
                     snackbar.snackSuccess("Success");
-
+                    finish();
                 } else{
                     snackbar.snackError("Failed");
                 }
