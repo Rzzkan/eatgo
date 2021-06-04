@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import tech.mlsn.eatgo.R;
 
@@ -38,4 +40,10 @@ public class Tools {
         DecimalFormat df = new DecimalFormat("#.##");
         return df.format(x).toString();
     }
+
+    public static String currency (String value){
+        String formattedNumber = NumberFormat.getCurrencyInstance(new Locale("id", "ID")).format(Double.valueOf(value));
+        return formattedNumber;
+    }
+
 }

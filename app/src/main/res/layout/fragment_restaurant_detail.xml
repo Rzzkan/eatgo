@@ -25,6 +25,15 @@
         android:layout_height="200dp"
         android:src="@drawable/ic_menu_illustration" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvReview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnUpdate"
+        android:layout_below="@id/lytInfo"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
+
     <LinearLayout
         android:id="@+id/lytInfo"
         android:layout_width="match_parent"
@@ -52,30 +61,25 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/ivCall"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnAllMenu"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_baseline_backup_24" />
+                android:backgroundTint="@color/grey"
+                android:text="All Menu" />
 
-            <ImageButton
-                android:id="@+id/ivChat"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnLink"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_baseline_backup_24" />
-
-            <ImageButton
-                android:id="@+id/ivDirection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_baseline_backup_24" />
+                android:backgroundTint="@color/grey"
+                android:text="Check Link" />
         </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

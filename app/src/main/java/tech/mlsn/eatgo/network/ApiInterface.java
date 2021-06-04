@@ -9,6 +9,7 @@ import tech.mlsn.eatgo.response.BaseResponse;
 import tech.mlsn.eatgo.response.RestaurantInfoResponse;
 import tech.mlsn.eatgo.response.dashboard.SlidersResponse;
 import tech.mlsn.eatgo.response.login.LoginResponse;
+import tech.mlsn.eatgo.response.menu.AllMenuResponse;
 import tech.mlsn.eatgo.response.profile.UpdateImageResponse;
 import tech.mlsn.eatgo.response.restaurant.RestaurantsResponse;
 import tech.mlsn.eatgo.response.restaurant.UserRestaurantResponse;
@@ -125,88 +126,19 @@ public interface ApiInterface {
             @Field("id_restaurant") String id_resto
     );
 
+    @FormUrlEncoded
+    @POST("allMenus.php")
+    Call<AllMenuResponse>allMenus(
+            @Field("id_restaurant") String id_resto
+    );
+
+    @FormUrlEncoded
+    @POST("allMenusActived.php")
+    Call<AllMenuResponse>allMenusActived(
+            @Field("id_restaurant") String id_resto
+    );
 
 
-//
-//    @FormUrlEncoded
-//    @POST("register.php")
-//    Call<BaseResponse> postRegister(
-//            @Field("email") String email,
-//            @Field("name") String name,
-//            @Field("username") String username,
-//            @Field("born") String born,
-//            @Field("phone") String phone,
-//            @Field("password") String password,
-//            @Field("role") String role
-//    );
-//
-//    @GET("allUsers.php")
-//    Call<AllUsersResponse>getAllUsers();
-//
-//
-//    @FormUrlEncoded
-//    @POST("userDashboard.php")
-//    Call<DashboardResponse> postDashboard(
-//            @Field("id_user") String id,
-//            @Field("date") String date,
-//            @Field("number") String number
-//    );
-//
-//    @FormUrlEncoded
-//    @POST("genNumber.php")
-//    Call<GenerateNumberResponse> postGenNumber(
-//            @Field("date") String date
-//    );
-//
-//    @FormUrlEncoded
-//    @POST("addQueue.php")
-//    Call<BaseResponse> postAddQueue(
-//            @Field("id_user") String id,
-//            @Field("date") String date,
-//            @Field("number") String number,
-//            @Field("status") String status
-//    );
-//
-//    @FormUrlEncoded
-//    @POST("updatePw.php")
-//    Call<BaseResponse> postUpdatePw(
-//            @Field("id_user") String id,
-//            @Field("password") String password
-//    );
-//
-//
-//    @FormUrlEncoded
-//    @POST("updateUser.php")
-//    Call<BaseResponse> postUpdateUser(
-//            @Field("id_user") String id,
-//            @Field("name") String name,
-//            @Field("phone") String phone
-//    );
-//
-//    @FormUrlEncoded
-//    @POST("allQueueNow.php")
-//    Call<QueuesResponse> getQueue(
-//            @Field("date") String date
-//    );
-//
-//    @FormUrlEncoded
-//    @POST("updateStatus.php")
-//    Call<BaseResponse> setStatus(
-//            @Field("id_queue") String id_queue,
-//            @Field("status") String status
-//    );
-//
-//    @FormUrlEncoded
-//    @POST("updateMax.php")
-//    Call<BaseResponse> setMax(
-//            @Field("max") String max
-//    );
-//
-//    @FormUrlEncoded
-//    @POST("adminDashboard.php")
-//    Call<AdminDashboardResponse> postAdminDashboard(
-//            @Field("date") String date
-//    );
 
 
 }

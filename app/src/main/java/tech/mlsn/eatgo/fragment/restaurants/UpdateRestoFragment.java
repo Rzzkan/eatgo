@@ -14,11 +14,20 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import tech.mlsn.eatgo.R;
+import tech.mlsn.eatgo.network.ApiClient;
+import tech.mlsn.eatgo.network.ApiInterface;
+import tech.mlsn.eatgo.tools.SPManager;
+import tech.mlsn.eatgo.tools.SnackbarHandler;
+
 public class UpdateRestoFragment extends Fragment {
     Button btnSave;
     TextInputLayout lytLatitude, lytLongitude;
     TextInputEditText etLatitude, etLongitude;
     Switch swActive;
+
+    SPManager spManager;
+    SnackbarHandler snackbar;
+    ApiInterface apiInterface;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,11 +38,29 @@ public class UpdateRestoFragment extends Fragment {
     }
 
     private void initialization(View view){
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        snackbar = new SnackbarHandler(getActivity());
+        spManager = new SPManager(getContext());
+
         btnSave = view.findViewById(R.id.btnSave);
         lytLatitude = view.findViewById(R.id.lytLatitude);
         lytLongitude = view.findViewById(R.id.lytLongitude);
         etLatitude = view.findViewById(R.id.etLatitude);
         etLongitude = view.findViewById(R.id.etLogitude);
         swActive = view.findViewById(R.id.swActive);
+    }
+
+    private void btnListener(){
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+
+    private void updateRestaurant(){
+
     }
 }
