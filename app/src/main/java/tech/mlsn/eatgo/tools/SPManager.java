@@ -11,6 +11,7 @@ public class SPManager {
     public static final String SP_NAME_RESTO = "spNameResto";
     public static final String SP_USERNAME = "spUsername";
     public static final String SP_PHONE = "spPhone";
+    public static final String SP_PHONE_RESTO = "spPhoneResto";
     public static final String SP_ADDRESS = "spAddress";
     public static final String SP_ADDRESS_RESTO = "spAddressResto";
     public static final String SP_PASSWORD = "spPassword";
@@ -55,6 +56,7 @@ public class SPManager {
         spEditor.remove(SP_IMG);
         spEditor.remove(SP_IMG_RESTO);
         spEditor.remove(SP_LINK_RESTO);
+        spEditor.remove(SP_PHONE_RESTO);
         spEditor.apply();
     }
 
@@ -72,6 +74,9 @@ public class SPManager {
 
     public String getSpPhone(){
         return sp.getString(SP_PHONE, "");
+    }
+    public String getSpPhoneResto(){
+        return sp.getString(SP_PHONE_RESTO, "");
     }
 
     public String getSpRole(){
@@ -96,7 +101,7 @@ public class SPManager {
     }
 
     public String getSpLinkResto(){
-        return sp.getString(SP_ID_RESTO, "");
+        return sp.getString(SP_LINK_RESTO, "");
     }
 
     public String getSpNameResto(){

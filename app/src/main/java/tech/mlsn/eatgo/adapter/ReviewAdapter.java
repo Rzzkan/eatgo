@@ -17,42 +17,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tech.mlsn.eatgo.R;
-import tech.mlsn.eatgo.model.UserModel;
 import tech.mlsn.eatgo.network.ApiClient;
-import tech.mlsn.eatgo.response.user.UserDataResponse;
+import tech.mlsn.eatgo.response.restaurant.RestaurantDataResponse;
+import tech.mlsn.eatgo.response.review.ReviewDataResponse;
 
-public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<UserDataResponse> items;
-    private List<UserDataResponse> itemsFiltered;
+public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<ReviewDataResponse> items;
+    private List<ReviewDataResponse> itemsFiltered;
 
     private Context ctx;
     private OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
-        void onItemClick(View view, UserDataResponse obj, int position);
+        void onItemClick(View view, ReviewDataResponse obj, int position);
     }
 
     public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
         this.mOnItemClickListener = mItemClickListener;
     }
 
-    public UsersAdapter(Context context, List<UserDataResponse> items) {
+    public ReviewAdapter(Context context, List<ReviewDataResponse> items) {
         this.items = items;
         this.itemsFiltered = items;
         ctx = context;
     }
 
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
-        public TextView name;
-        public TextView phone;
-        public CircularImageView ivProfile;
+        public TextView tvName, tvRating, tvReview;
+        public CircularImageView ivImage;
         public View lyt_parent;
 
         public OriginalViewHolder(View v) {
             super(v);
-            name =  v.findViewById(R.id.tvName);
-            phone = v.findViewById(R.id.tvPhone);
-            ivProfile = v.findViewById(R.id.ivPhoto);
+            tvName =  v.findViewById(R.id.tvName);
+            ivImage = v.findViewById(R.id.ivPhoto);
+            tvRating = v.findViewById(R.id.tvRating);
+            tvReview = v.findViewById(R.id.tvReview);
             lyt_parent = v.findViewById(R.id.lyt_parent);
         }
     }
@@ -60,7 +60,7 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh;
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_users, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review, parent, false);
         vh = new OriginalViewHolder(v);
         return vh;
     }
@@ -70,10 +70,11 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof OriginalViewHolder) {
             OriginalViewHolder view = (OriginalViewHolder) holder;
-            UserDataResponse x = itemsFiltered.get(position);
-            view.name.setText(x.getName());
-            view.phone.setText("62"+x.getPhone());
-            Glide.with(ctx).load(ApiClient.BASE_URL+x.getImage()).into(view.ivProfile);
+            ReviewDataResponse x = itemsFiltered.get(position);
+            view.tvName.setText(x.getName());
+            view.tvRating.setText(x.getRating().toString());
+            view.tvReview.setText(x.getReview());
+            Glide.with(ctx).load(ApiClient.BASE_URL+ x.getImage()).into(view.ivImage);
 
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,9 +96,9 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 if (charString.isEmpty()) {
                     itemsFiltered = items;
                 } else {
-                    List<UserDataResponse> filteredList = new ArrayList<>();
-                    for (UserDataResponse data : items) {
-                        String name = data.getName().toLowerCase().trim();
+                    List<ReviewDataResponse> filteredList = new ArrayList<>();
+                    for (ReviewDataResponse data : items) {
+                        String name = data.getReview().toLowerCase().trim();
                         if(name.contains(charString.toLowerCase().trim())){
                             filteredList.add(data);
                         }
@@ -113,7 +114,7 @@ public class UsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                itemsFiltered = (ArrayList<UserDataResponse>) filterResults.values;
+                itemsFiltered = (ArrayList<ReviewDataResponse>) filterResults.values;
                 notifyDataSetChanged();
             }
         };

@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.text.DecimalFormat;
+
 import tech.mlsn.eatgo.R;
 
 
@@ -29,5 +31,11 @@ public class Tools {
         manager.popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
         ft.replace(R.id.main_content, replaceFragment);
         ft.commitAllowingStateLoss();
+    }
+
+    public static String distanceFormat(String number){
+        double x = Double.valueOf(number);
+        DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(x).toString();
     }
 }

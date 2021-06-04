@@ -15,23 +15,24 @@ import java.util.List;
 
 import tech.mlsn.eatgo.R;
 import tech.mlsn.eatgo.model.UserModel;
+import tech.mlsn.eatgo.response.restaurant.RestaurantDataResponse;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<UserModel> items;
-    private List<UserModel> itemsFiltered;
+    private List<RestaurantDataResponse> items;
+    private List<RestaurantDataResponse> itemsFiltered;
 
     private Context ctx;
     private OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
-        void onItemClick(View view, UserModel obj, int position);
+        void onItemClick(View view, RestaurantDataResponse obj, int position);
     }
 
     public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
         this.mOnItemClickListener = mItemClickListener;
     }
 
-    public RestaurantAdapter(Context context, List<UserModel> items) {
+    public RestaurantAdapter(Context context, List<RestaurantDataResponse> items) {
         this.items = items;
         this.itemsFiltered = items;
         ctx = context;
@@ -39,14 +40,15 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
-        public TextView email;
+        public TextView address;
         public TextView phone;
         public View lyt_parent;
 
         public OriginalViewHolder(View v) {
             super(v);
             name =  v.findViewById(R.id.tvName);
-//            phone = v.findViewById(R.id.tvPhone);
+            address =  v.findViewById(R.id.tvAddress);
+            phone = v.findViewById(R.id.tvPhone);
             lyt_parent = v.findViewById(R.id.lyt_parent);
         }
     }
@@ -54,7 +56,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh;
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_users, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_restaurants, parent, false);
         vh = new OriginalViewHolder(v);
         return vh;
     }
@@ -64,9 +66,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof OriginalViewHolder) {
             OriginalViewHolder view = (OriginalViewHolder) holder;
-//            UserModel x = itemsFiltered.get(position);
-//            view.name.setText(x.getName());
-//            view.phone.setText("62"+x.getPhone());
+            RestaurantDataResponse x = itemsFiltered.get(position);
+            view.name.setText(x.getName());
+            view.phone.setText("62"+x.getPhone());
+            view.address.setText(x.getAddress());
 
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -88,8 +91,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 if (charString.isEmpty()) {
                     itemsFiltered = items;
                 } else {
-                    List<UserModel> filteredList = new ArrayList<>();
-                    for (UserModel data : items) {
+                    List<RestaurantDataResponse> filteredList = new ArrayList<>();
+                    for (RestaurantDataResponse data : items) {
                         String name = data.getName().toLowerCase().trim();
                         if(name.contains(charString.toLowerCase().trim())){
                             filteredList.add(data);
@@ -106,7 +109,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                itemsFiltered = (ArrayList<UserModel>) filterResults.values;
+                itemsFiltered = (ArrayList<RestaurantDataResponse>) filterResults.values;
                 notifyDataSetChanged();
             }
         };

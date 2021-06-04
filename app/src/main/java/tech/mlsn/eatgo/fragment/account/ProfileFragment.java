@@ -89,8 +89,8 @@ public class ProfileFragment extends Fragment {
 
     public void logoutDialog(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle    ("Exit");
-        builder.setMessage("Are you sure to Exit ?");
+        builder.setTitle    ("Logout");
+        builder.setMessage("Are you sure to Logout ?");
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

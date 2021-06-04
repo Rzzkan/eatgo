@@ -97,8 +97,10 @@ public class LoginActivity extends AppCompatActivity {
                     LoginDataResponse currentUser = response.body().getData();
                     spManager.saveSPString(spManager.SP_ID, currentUser.getIdUser());
                     spManager.saveSPString(spManager.SP_NAME, currentUser.getName());
+                    spManager.saveSPString(spManager.SP_ADDRESS, currentUser.getAddress());
                     spManager.saveSPString(spManager.SP_PHONE, currentUser.getPhone());
                     spManager.saveSPString(spManager.SP_ROLE, currentUser.getRole());
+                    spManager.saveSPString(spManager.SP_ID_RESTO, currentUser.getIdRestaurant());
                     spManager.saveSPBoolean(spManager.SP_IS_SIGNED, true);
                     snackbar.snackSuccess("Success");
                     new Handler().postDelayed(new Runnable() {

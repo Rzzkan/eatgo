@@ -1,51 +1,46 @@
-package tech.mlsn.eatgo.response.login;
+package tech.mlsn.eatgo.response.user;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by Rzzkan on 12/05/2021.
+ * Created by Rzzkan on 03/06/2021.
  */
-public class LoginDataResponse {
-
+public class UserDataResponse {
     @SerializedName("id_user")
     @Expose
     private String idUser;
     @SerializedName("id_restaurant")
     @Expose
     private String idRestaurant;
-    @SerializedName("username")
-    @Expose
-    private String username;
-    @SerializedName("role")
-    @Expose
-    private String role;
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("address")
+    @SerializedName("username")
     @Expose
-    private String address;
+    private String username;
     @SerializedName("phone")
     @Expose
     private String phone;
-    @SerializedName("image")
-    @Expose
-    private String image;
     @SerializedName("password")
     @Expose
     private String password;
+    @SerializedName("image")
+    @Expose
+    private String image;
+    @SerializedName("role")
+    @Expose
+    private String role;
 
-    public LoginDataResponse(String idUser, String idRestaurant, String username, String role, String name, String address, String phone, String image, String password) {
+    public UserDataResponse(String idUser, String idRestaurant, String name, String username, String phone, String password, String image, String role) {
         this.idUser = idUser;
         this.idRestaurant = idRestaurant;
-        this.username = username;
-        this.role = role;
         this.name = name;
-        this.address = address;
+        this.username = username;
         this.phone = phone;
-        this.image = image;
         this.password = password;
+        this.image = image;
+        this.role = role;
     }
 
 
@@ -65,22 +60,6 @@ public class LoginDataResponse {
         this.idRestaurant = idRestaurant;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getName() {
         return name;
     }
@@ -89,12 +68,12 @@ public class LoginDataResponse {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getUsername() {
+        return username;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPhone() {
@@ -105,6 +84,14 @@ public class LoginDataResponse {
         this.phone = phone;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getImage() {
         return image;
     }
@@ -113,11 +100,11 @@ public class LoginDataResponse {
         this.image = image;
     }
 
-    public String getPassword() {
-        return password;
+    public String getRole() {
+        return role;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

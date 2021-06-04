@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
-        android:text="@string/update_pw_title"
+        android:text="@string/profile_title"
         android:textColor="@color/grey"
         android:textSize="@dimen/heading_1"
         android:textStyle="bold" />

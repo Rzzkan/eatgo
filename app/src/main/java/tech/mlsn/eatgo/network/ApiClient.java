@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     public Context context;
-        public static final String BASE_URL = "http://montirkuy.rzzkan.com/";
+        public static final String BASE_URL = "http://eatgo.rzzkan.com/";
     public ApiClient(Context context){
         this.context = context;
     }

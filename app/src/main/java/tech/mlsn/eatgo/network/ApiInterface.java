@@ -6,8 +6,14 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import tech.mlsn.eatgo.response.BaseResponse;
+import tech.mlsn.eatgo.response.RestaurantInfoResponse;
+import tech.mlsn.eatgo.response.dashboard.SlidersResponse;
 import tech.mlsn.eatgo.response.login.LoginResponse;
 import tech.mlsn.eatgo.response.profile.UpdateImageResponse;
+import tech.mlsn.eatgo.response.restaurant.RestaurantsResponse;
+import tech.mlsn.eatgo.response.restaurant.UserRestaurantResponse;
+import tech.mlsn.eatgo.response.review.ReviewResponse;
+import tech.mlsn.eatgo.response.user.UsersResponse;
 
 public interface ApiInterface {
 
@@ -46,6 +52,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("updateUser.php")
     Call<BaseResponse> updateUser(
+            @Field("id_user") String id_user,
             @Field("name") String name,
             @Field("address") String address,
             @Field("phone") String phone
@@ -63,7 +70,8 @@ public interface ApiInterface {
     Call<BaseResponse> updateRestaurant(
             @Field("name") String name,
             @Field("address") String address,
-            @Field("link") String link
+            @Field("link") String link,
+            @Field("phone") String phone
     );
 
     @FormUrlEncoded
@@ -72,7 +80,48 @@ public interface ApiInterface {
             @Field("id_user") String id_user,
             @Field("name") String name,
             @Field("address") String address,
-            @Field("link") String link
+            @Field("link") String link,
+            @Field("phone") String phone
+    );
+
+    @FormUrlEncoded
+    @POST("addMenu.php")
+    Call<BaseResponse> addMenu(
+            @Field("id_restaurant") String id_restaurant,
+            @Field("name") String name,
+            @Field("description") String description,
+            @Field("category") String category,
+            @Field("price") String price,
+            @Field("image") String img
+    );
+
+
+    @GET("allUsers.php")
+    Call<UsersResponse>getAllUsers();
+
+    @GET("allRestaurant.php")
+    Call<RestaurantsResponse>getAllRestaurants();
+
+    @FormUrlEncoded
+    @POST("getRestoInfo.php")
+    Call<RestaurantInfoResponse>getRestoInfo(
+            @Field("id_restaurant") String id_resto
+    );
+
+    @GET("allSliders.php")
+    Call<SlidersResponse>getAllSliders();
+
+    @FormUrlEncoded
+    @POST("userDashboard.php")
+    Call<UserRestaurantResponse> getUserDashboard(
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude
+    );
+
+    @FormUrlEncoded
+    @POST("reviewResto.php")
+    Call<ReviewResponse>getRestoReview(
+            @Field("id_restaurant") String id_resto
     );
 
 

@@ -39,6 +39,7 @@ public class UpdatePasswordFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_update_password, container, false);
         initialization(view);
+        clickListener();
         return view;
     }
 
@@ -63,10 +64,10 @@ public class UpdatePasswordFragment extends Fragment {
                     if(etOldPassword.getText().toString().equals(spManager.getSpPassword())){
                         updatePassword();
                     }else {
-                        snackbar.snackInfo("Sandi Lama Tidak Sesuai");
+                        snackbar.snackInfo("Not Match");
                     }
                 }else {
-                    snackbar.snackInfo("Tidak Boleh Kosong");
+                    snackbar.snackInfo("Required");
                 }
             }
         });

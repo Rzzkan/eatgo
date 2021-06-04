@@ -247,7 +247,7 @@ public class UpdateProfileFragment extends Fragment {
 
     private void loadProfile(String url) {
         Glide.with(this)
-                .load(url)
+                .load(ApiClient.BASE_URL+url)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(imgProfile);
@@ -301,6 +301,7 @@ public class UpdateProfileFragment extends Fragment {
 
     private void postUpdate(){
         Call<BaseResponse> postRegister = apiInterface.updateUser(
+                spManager.getSpId(),
                 etName.getText().toString(),
                 etAddress.getText().toString(),
                 etPhone.getText().toString()
@@ -311,6 +312,9 @@ public class UpdateProfileFragment extends Fragment {
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response.body().getSuccess()==1) {
                     snackbar.snackSuccess("Success");
+                    spManager.saveSPString(SPManager.SP_NAME,etName.getText().toString());
+                    spManager.saveSPString(SPManager.SP_ADDRESS,etAddress.getText().toString());
+                    spManager.saveSPString(SPManager.SP_PHONE,etPhone.getText().toString());
                     Tools.removeAllFragment(getActivity(), new ProfileFragment(),"profile");
                 } else{
                     snackbar.snackError("Failed");

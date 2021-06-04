@@ -52,8 +52,8 @@ import static tech.mlsn.eatgo.tools.Base64Helper.encodeTobase64;
 public class UpdateRestaurantFragment extends Fragment {
     CircularImageView imgProfile;
     Button btnSave, btnChangePhoto;
-    TextInputLayout  lytName,lytAddress, lytLink;
-    TextInputEditText etName, etAddress, etLink;
+    TextInputLayout  lytName,lytAddress, lytLink, lytPhone;
+    TextInputEditText etName, etAddress, etLink, etPhone;
 
     public static final int REQUEST_IMAGE = 100;
     public String img;
@@ -69,6 +69,7 @@ public class UpdateRestaurantFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_update_restaurant, container, false);
         initialization(view);
         btnListener();
+        inputListener();
         return view;
     }
 
@@ -86,11 +87,14 @@ public class UpdateRestaurantFragment extends Fragment {
         etLink = view.findViewById(R.id.etLink);
         lytName = view.findViewById(R.id.lytName);
         etName = view.findViewById(R.id.etName);
+        lytPhone = view.findViewById(R.id.lytPhone);
+        etPhone = view.findViewById(R.id.etPhone);
 
         if (!spManager.getSpIdResto().equalsIgnoreCase("0")){
             etName.setText(spManager.getSpNameResto());
             etAddress.setText(spManager.getSpAddressResto());
             etLink.setText(spManager.getSpLinkResto());
+            etPhone.setText(spManager.getSpPhoneResto());
         }
 
         if (spManager.getSpImgResto().equalsIgnoreCase("null")){
@@ -170,13 +174,13 @@ public class UpdateRestaurantFragment extends Fragment {
 
         // setting aspect ratio
         intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
-        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1); // 16x9, 1x1, 3:4, 3:2
-        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1);
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 16); // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 9);
 
         // setting maximum bitmap width and height
         intent.putExtra(ImagePickerActivity.INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT, true);
-        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 1000);
-        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 1000);
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 1280);
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 720);
 
         startActivityForResult(intent, REQUEST_IMAGE);
     }
@@ -187,8 +191,8 @@ public class UpdateRestaurantFragment extends Fragment {
 
         // setting aspect ratio
         intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
-        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1); // 16x9, 1x1, 3:4, 3:2
-        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1);
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 16); // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 9);
         startActivityForResult(intent, REQUEST_IMAGE);
     }
 
@@ -240,7 +244,7 @@ public class UpdateRestaurantFragment extends Fragment {
             public void onResponse(Call<UpdateImageResponse> call, Response<UpdateImageResponse> response) {
                 if (response.body().getSuccess()==1) {
                     spManager.saveSPString(SPManager.SP_IMG_RESTO, response.body().getUrl());
-                    loadProfile(spManager.getSpImg());
+                    loadProfile(spManager.getSpImgResto());
                 } else{
                 }
             }
@@ -253,7 +257,7 @@ public class UpdateRestaurantFragment extends Fragment {
 
     private void loadProfile(String url) {
         Glide.with(this)
-                .load(url)
+                .load(ApiClient.BASE_URL+url)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(imgProfile);
@@ -271,6 +275,11 @@ public class UpdateRestaurantFragment extends Fragment {
             snackbar.snackInfo("Please make sure if there are no empty field");
             valid = false;
         }
+
+        if (!etPhone.getText().toString().matches("^[1-9][0-9]*$")){
+            lytPhone.setError("Numbers Must not start with 0");
+            valid = false;
+        }
         return valid;
     }
 
@@ -278,7 +287,8 @@ public class UpdateRestaurantFragment extends Fragment {
         Call<BaseResponse> postRegister = apiInterface.updateRestaurant(
                 etName.getText().toString(),
                 etAddress.getText().toString(),
-                etLink.getText().toString()
+                etLink.getText().toString(),
+                etPhone.getText().toString()
         );
 
         postRegister.enqueue(new Callback<BaseResponse>() {
@@ -303,7 +313,8 @@ public class UpdateRestaurantFragment extends Fragment {
                 spManager.getSpId(),
                 etName.getText().toString(),
                 etAddress.getText().toString(),
-                etLink.getText().toString()
+                etLink.getText().toString(),
+                etPhone.getText().toString()
         );
 
         postRegister.enqueue(new Callback<BaseResponse>() {
@@ -321,6 +332,33 @@ public class UpdateRestaurantFragment extends Fragment {
                 snackbar.snackInfo("No Connection");
             }
         });
+    }
+
+    private void inputListener(){
+        etPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (lytPhone.isErrorEnabled()){
+                    lytPhone.setErrorEnabled(false);
+
+                }
+                if (!s.toString().matches("^[1-9][0-9]*$")){
+                    lytPhone.setError("Numbers Must not start with 0");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
 
