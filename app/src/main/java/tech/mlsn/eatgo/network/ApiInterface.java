@@ -68,6 +68,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("updateRestaurant.php")
     Call<BaseResponse> updateRestaurant(
+            @Field("id_restaurant") String id_restaurant,
             @Field("name") String name,
             @Field("address") String address,
             @Field("link") String link,

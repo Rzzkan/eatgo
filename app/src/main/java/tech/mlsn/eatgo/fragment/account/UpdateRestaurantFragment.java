@@ -285,6 +285,7 @@ public class UpdateRestaurantFragment extends Fragment {
 
     private void postUpdate(){
         Call<BaseResponse> postRegister = apiInterface.updateRestaurant(
+                spManager.getSpIdResto(),
                 etName.getText().toString(),
                 etAddress.getText().toString(),
                 etLink.getText().toString(),
