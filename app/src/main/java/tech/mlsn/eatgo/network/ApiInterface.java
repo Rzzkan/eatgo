@@ -10,6 +10,7 @@ import tech.mlsn.eatgo.response.RestaurantInfoResponse;
 import tech.mlsn.eatgo.response.dashboard.SlidersResponse;
 import tech.mlsn.eatgo.response.login.LoginResponse;
 import tech.mlsn.eatgo.response.menu.AllMenuResponse;
+import tech.mlsn.eatgo.response.menu.MenuResponse;
 import tech.mlsn.eatgo.response.profile.UpdateImageResponse;
 import tech.mlsn.eatgo.response.restaurant.RestaurantsResponse;
 import tech.mlsn.eatgo.response.restaurant.UserRestaurantResponse;
@@ -137,6 +138,54 @@ public interface ApiInterface {
     Call<AllMenuResponse>allMenusActived(
             @Field("id_restaurant") String id_resto
     );
+
+    @FormUrlEncoded
+    @POST("updateRestaurantAdmin.php")
+    Call<BaseResponse> updateRestaurantAdmin(
+            @Field("id_restaurant") String id_restaurant,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude,
+            @Field("is_active") String is_active
+    );
+
+    @FormUrlEncoded
+    @POST("deleteMenu.php")
+    Call<BaseResponse> deleteMenu(
+            @Field("id_menu") String id_menu
+    );
+
+    @FormUrlEncoded
+    @POST("deleteSlider.php")
+    Call<BaseResponse> deleteslider(
+            @Field("id_slider") String id_slider
+    );
+
+    @FormUrlEncoded
+    @POST("addReview.php")
+    Call<BaseResponse> postAddReview(
+            @Field("id_user") String id_user,
+            @Field("id_restaurant") String id_restaurant,
+            @Field("rating") String rating,
+            @Field("review") String review
+    );
+
+    @FormUrlEncoded
+    @POST("updateMenu.php")
+    Call<BaseResponse> updateMenu(
+            @Field("id_menu") String id_menu,
+            @Field("name") String name,
+            @Field("description") String description,
+            @Field("category") String category,
+            @Field("price") String price,
+            @Field("image") String img
+    );
+
+    @FormUrlEncoded
+    @POST("getMenu.php")
+    Call<MenuResponse>getMenu(
+            @Field("id_menu") String id_menu
+    );
+
 
 
 

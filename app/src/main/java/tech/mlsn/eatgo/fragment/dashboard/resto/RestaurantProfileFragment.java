@@ -1,6 +1,8 @@
 package tech.mlsn.eatgo.fragment.dashboard.resto;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +35,7 @@ import tech.mlsn.eatgo.fragment.chats.ChatDetailFragment;
 import tech.mlsn.eatgo.fragment.menus.AllMenusFragment;
 import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.network.ApiInterface;
+import tech.mlsn.eatgo.response.BaseResponse;
 import tech.mlsn.eatgo.response.RestaurantInfoResponse;
 import tech.mlsn.eatgo.response.restaurant.UserRestaurantDataResponse;
 import tech.mlsn.eatgo.response.review.ReviewDataResponse;
@@ -52,6 +58,7 @@ public class RestaurantProfileFragment extends Fragment {
 
     String id_restaurant="", phone="";
     String  latitude="0", longitude="0";
+    String rate="0";
 
     ReviewAdapter adapter;
     ArrayList<ReviewDataResponse> listReview;
@@ -103,7 +110,7 @@ public class RestaurantProfileFragment extends Fragment {
         btnReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDialogReview();
             }
         });
 
@@ -204,5 +211,69 @@ public class RestaurantProfileFragment extends Fragment {
                 snackbar.snackInfo("No Connection");
             }
         });
+    }
+
+    private void postReview(String id_user, String id_restaurant ,String rating, String review){
+        Call<BaseResponse> postRestoReview = apiInterface.postAddReview(
+                id_user,
+                id_restaurant,
+                rating,
+                review
+        );
+
+        postRestoReview.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.body().getSuccess()==1) {
+                    snackbar.snackSuccess("Success");
+                } else{
+                    snackbar.snackError("Failed");
+                }
+            }
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                snackbar.snackInfo("No Connection");
+            }
+        });
+    }
+
+    private void showDialogReview(){
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_review);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(true);
+
+        final RatingBar rating = dialog.findViewById(R.id.ratingBar);
+        final EditText etReview = dialog.findViewById(R.id.etReview);
+        final Button btnAction = dialog.findViewById(R.id.btnAction);
+        final ImageButton btnClose = dialog.findViewById(R.id.btnAction);
+
+        rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                rate = String.valueOf(rating);
+            }
+        });
+
+        btnAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!rate.equalsIgnoreCase("0")&&!etReview.getText().toString().isEmpty()){
+                    postReview(spManager.getSpId(),id_restaurant,rate,etReview.getText().toString());
+                }else {
+                    snackbar.snackError("Cant Empty");
+                }
+            }
+        });
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }

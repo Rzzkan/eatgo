@@ -42,8 +42,6 @@ public class RestoDasboardFragment extends Fragment {
     SnackbarHandler snackbar;
     ApiInterface apiInterface;
 
-    String id_restaurant="";
-
     ReviewAdapter adapter;
     ArrayList<ReviewDataResponse> listReview;
 

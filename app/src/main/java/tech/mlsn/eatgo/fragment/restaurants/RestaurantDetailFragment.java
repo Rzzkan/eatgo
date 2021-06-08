@@ -43,7 +43,7 @@ public class RestaurantDetailFragment extends Fragment {
     SnackbarHandler snackbar;
     ApiInterface apiInterface;
 
-    String id_restaurant="";
+    String id_restaurant="", latitude="", longitude="", is_active="";
     ReviewAdapter adapter;
     ArrayList<ReviewDataResponse> listReview;
 
@@ -126,6 +126,10 @@ public class RestaurantDetailFragment extends Fragment {
                     Glide.with(getActivity()).load(ApiClient.BASE_URL+ response.body().getData().getImage()).centerCrop().into(ivBanner);
                     tvNameRestaurant.setText(response.body().getData().getName());
                     tvAddress.setText(response.body().getData().getAddress());
+                    latitude = response.body().getData().getLatitude();
+                    longitude = response.body().getData().getLongitude();
+                    is_active = response.body().getData().getIsActive();
+
                 } else{
                     snackbar.snackError("Failed");
                 }
