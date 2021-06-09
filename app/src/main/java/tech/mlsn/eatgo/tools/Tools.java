@@ -9,6 +9,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import tech.mlsn.eatgo.R;
@@ -45,5 +48,20 @@ public class Tools {
         String formattedNumber = NumberFormat.getCurrencyInstance(new Locale("id", "ID")).format(Double.valueOf(value));
         return formattedNumber;
     }
+
+    public static String dateParserChat(String currentDate){
+        SimpleDateFormat currentFormat,newFormat;
+        String newDate = "";
+        currentFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        newFormat = new SimpleDateFormat("h:mm a");
+        try {
+            Date getDate = currentFormat.parse(currentDate);
+            newDate = newFormat.format(getDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return newDate;
+    }
+
 
 }

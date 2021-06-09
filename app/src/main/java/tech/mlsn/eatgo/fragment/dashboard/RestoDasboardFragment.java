@@ -23,6 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tech.mlsn.eatgo.R;
 import tech.mlsn.eatgo.adapter.ReviewAdapter;
+import tech.mlsn.eatgo.fragment.menus.AllMenusFragment;
 import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.network.ApiInterface;
 import tech.mlsn.eatgo.response.RestaurantInfoResponse;
@@ -30,6 +31,7 @@ import tech.mlsn.eatgo.response.review.ReviewDataResponse;
 import tech.mlsn.eatgo.response.review.ReviewResponse;
 import tech.mlsn.eatgo.tools.SPManager;
 import tech.mlsn.eatgo.tools.SnackbarHandler;
+import tech.mlsn.eatgo.tools.Tools;
 
 public class RestoDasboardFragment extends Fragment {
     ImageView ivBanner;
@@ -52,6 +54,7 @@ public class RestoDasboardFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_resto_dasboard, container, false);
         initialization(view);
+        btnListener();
         return view;
     }
 
@@ -87,7 +90,7 @@ public class RestoDasboardFragment extends Fragment {
             public void onResponse(Call<RestaurantInfoResponse> call, Response<RestaurantInfoResponse> response) {
                 if (response.body().getSuccess()==1) {
                     snackbar.snackSuccess("Success");
-                    Glide.with(getActivity()).load(ApiClient.BASE_URL+ response.body().getData().getImage()).centerCrop().into(ivBanner);
+                    Glide.with(getContext()).load(ApiClient.BASE_URL+ response.body().getData().getImage()).centerCrop().into(ivBanner);
                     tvNameRestaurant.setText(response.body().getData().getName());
                     tvAddress.setText(response.body().getData().getAddress());
                 } else{
@@ -97,6 +100,17 @@ public class RestoDasboardFragment extends Fragment {
             @Override
             public void onFailure(Call<RestaurantInfoResponse> call, Throwable t) {
                 snackbar.snackInfo("No Connection");
+            }
+        });
+    }
+
+    private void btnListener(){
+        btnAllmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle data = new Bundle();
+                data.putString("id_restaurant",spManager.getSpIdResto());
+                Tools.addFragment(getActivity(),new AllMenusFragment(), data, "all-menu");
             }
         });
     }

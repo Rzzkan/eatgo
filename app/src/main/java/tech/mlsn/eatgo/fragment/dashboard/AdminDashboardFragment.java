@@ -19,6 +19,7 @@ import tech.mlsn.eatgo.R;
 import tech.mlsn.eatgo.adapter.SliderAdapter;
 import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.network.ApiInterface;
+import tech.mlsn.eatgo.response.DashboardAdminResponse;
 import tech.mlsn.eatgo.response.dashboard.SliderDataResponse;
 import tech.mlsn.eatgo.response.dashboard.SlidersResponse;
 import tech.mlsn.eatgo.tools.SPManager;
@@ -59,6 +60,7 @@ public class AdminDashboardFragment extends Fragment {
         tvRestaurant = view.findViewById(R.id.tvTotalRestaurant);
         tvReviewers = view.findViewById(R.id.tvTotalReviews);
         tvMenus = view.findViewById(R.id.tvTotalMenus);
+        btnCustomize = view.findViewById(R.id.btnCustom);
 
         sliderAdapter = new SliderAdapter(getContext());
         imgSlider.setSliderAdapter(sliderAdapter);
@@ -100,6 +102,24 @@ public class AdminDashboardFragment extends Fragment {
     }
 
     private void getAdminDashboard(){
-
+        Call<DashboardAdminResponse> getSlider = apiInterface.getAdminDashboard();
+        getSlider.enqueue(new Callback<DashboardAdminResponse>() {
+            @Override
+            public void onResponse(Call<DashboardAdminResponse> call, Response<DashboardAdminResponse> response) {
+                if (response.body().getSuccess()==1) {
+                    tvMenus.setText(response.body().getData().getTotalMenu().toString());
+                    tvRestaurant.setText(response.body().getData().getTotalResto().toString());
+                    tvUser.setText(response.body().getData().getTotalUser().toString());
+                    tvReviewers.setText(response.body().getData().getTotalReview().toString());
+                    snackbar.snackSuccess("Success");
+                } else{
+                    snackbar.snackError("Failed");
+                }
+            }
+            @Override
+            public void onFailure(Call<DashboardAdminResponse> call, Throwable t) {
+                snackbar.snackInfo("No Connection");
+            }
+        });
     }
 }

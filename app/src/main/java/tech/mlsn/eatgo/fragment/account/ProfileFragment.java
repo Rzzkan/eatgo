@@ -78,7 +78,9 @@ public class ProfileFragment extends Fragment {
                     Tools.addFragment(getActivity(), new UpdatePasswordFragment(),null,"update-password");
                     break;
                 case R.id.btnMenu:
-                    Tools.addFragment(getActivity(), new AllMenusFragment(), null, "all-menu");
+                    Bundle data = new Bundle();
+                    data.putString("id_restaurant",spManager.getSpIdResto());
+                    Tools.addFragment(getActivity(), new AllMenusFragment(), data, "all-menu");
                     break;
                 case R.id.btnLogout:
                     logoutDialog();

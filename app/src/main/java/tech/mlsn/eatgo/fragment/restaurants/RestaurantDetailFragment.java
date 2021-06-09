@@ -1,5 +1,7 @@
 package tech.mlsn.eatgo.fragment.restaurants;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -33,6 +35,9 @@ import tech.mlsn.eatgo.tools.SPManager;
 import tech.mlsn.eatgo.tools.SnackbarHandler;
 import tech.mlsn.eatgo.tools.Tools;
 
+import static android.content.Intent.ACTION_VIEW;
+import static android.content.Intent.CATEGORY_BROWSABLE;
+
 public class RestaurantDetailFragment extends Fragment {
     Button btnUpdate, btnAllMenu, btnCheckLink;
     ImageView ivBanner;
@@ -43,7 +48,7 @@ public class RestaurantDetailFragment extends Fragment {
     SnackbarHandler snackbar;
     ApiInterface apiInterface;
 
-    String id_restaurant="", latitude="", longitude="", is_active="";
+    String id_restaurant="", latitude="", longitude="", is_active="", url="";
     ReviewAdapter adapter;
     ArrayList<ReviewDataResponse> listReview;
 
@@ -55,6 +60,7 @@ public class RestaurantDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_restaurant_detail, container, false);
         initialization(view);
         getData();
+        btnListener();
         return view;
     }
 
@@ -83,7 +89,10 @@ public class RestaurantDetailFragment extends Fragment {
         btnCheckLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String query = Uri.encode(url, "UTF-8");
+                Intent browserIntent = new Intent(CATEGORY_BROWSABLE, Uri.parse(Uri.decode(query)));
+                browserIntent.setAction(ACTION_VIEW);
+                startActivity(browserIntent);
             }
         });
 
@@ -108,7 +117,7 @@ public class RestaurantDetailFragment extends Fragment {
 
     private void getData(){
         Bundle data = this.getArguments();
-        id_restaurant = data.getString("id_resturant","0");
+        id_restaurant = data.getString("id_restaurant","0");
         getRestoInfo(id_restaurant);
         getReview(id_restaurant);
     }
@@ -129,6 +138,7 @@ public class RestaurantDetailFragment extends Fragment {
                     latitude = response.body().getData().getLatitude();
                     longitude = response.body().getData().getLongitude();
                     is_active = response.body().getData().getIsActive();
+                    url = response.body().getData().getLink();
 
                 } else{
                     snackbar.snackError("Failed");

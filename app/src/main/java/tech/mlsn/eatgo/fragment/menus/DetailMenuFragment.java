@@ -20,6 +20,7 @@ import tech.mlsn.eatgo.response.menu.AllMenuDataResponse;
 import tech.mlsn.eatgo.response.menu.MenuResponse;
 import tech.mlsn.eatgo.tools.SPManager;
 import tech.mlsn.eatgo.tools.SnackbarHandler;
+import tech.mlsn.eatgo.tools.Tools;
 
 public class DetailMenuFragment extends Fragment {
     TextView tvName, tvDescription, tvPrice, tvCategory;
@@ -69,7 +70,7 @@ public class DetailMenuFragment extends Fragment {
                         AllMenuDataResponse data = response.body().getData();
                         tvName.setText(data.getName());
                         tvDescription.setText(data.getDescription());
-                        tvPrice.setText(data.getPrice());
+                        tvPrice.setText(Tools.currency(data.getPrice()));
                         tvCategory.setText(data.getCategory());
                     } else{
                         snackbar.snackError("Failed");

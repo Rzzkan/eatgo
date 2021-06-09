@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tech.mlsn.eatgo.R;
+import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.response.dashboard.SliderDataResponse;
 
 /**
@@ -58,7 +59,7 @@ public class SliderAdapter extends
         SliderDataResponse sliderItem = mSliderItems.get(position);
 
         Glide.with(context)
-                .load(sliderItem.getImage())
+                .load(ApiClient.BASE_URL + sliderItem.getImage())
                 .centerCrop()
                 .into(viewHolder.ivSlider);
 

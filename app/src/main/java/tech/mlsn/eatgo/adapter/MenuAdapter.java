@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.PopupMenu;
@@ -37,6 +38,8 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private OnEditClickListener mOnEditClickListener;
     private OnDeleteClickListener mOnDeleteClickListener;
 
+    private String role;
+
 
     public interface OnItemClickListener {
         void onItemClick(View view, AllMenuDataResponse obj, int position);
@@ -62,16 +65,17 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.mOnDeleteClickListener = mDeleteClickListener;
     }
 
-    public MenuAdapter(Context context, List<AllMenuDataResponse> items) {
+    public MenuAdapter(Context context, List<AllMenuDataResponse> items, String role) {
         this.items = items;
         this.itemsFiltered = items;
+        this.role = role;
         ctx = context;
     }
 
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
         public TextView tvName,tvDesc, tvPrice, tvStatus;
         public ImageView ivMenu, ivMore;
-        public View lyt_parent;
+        public RelativeLayout lyt_parent;
 
         public OriginalViewHolder(View v) {
             super(v);
@@ -81,7 +85,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tvStatus = v.findViewById(R.id.tvStatus);
             ivMenu  = v.findViewById(R.id.ivMenu);
             ivMore = v.findViewById(R.id.ivMore);
-            lyt_parent = v.findViewById(R.id.lyt_parent);
+            lyt_parent = v.findViewById(R.id.lytParent);
         }
     }
 
@@ -102,6 +106,9 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             view.tvName.setText(x.getName());
             view.tvDesc.setText(x.getDescription());
             view.tvPrice.setText(Tools.currency(x.getPrice()));
+            if (!role.equalsIgnoreCase("resto")){
+                view.ivMore.setVisibility(View.GONE);
+            }
             if (x.getIsActive().toString().equalsIgnoreCase("0")){
                 view.tvStatus.setText("Not Active");
             }else {
@@ -125,7 +132,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     PopupMenu popupMenu = new PopupMenu(ctx,((OriginalViewHolder) holder).ivMore);
                     popupMenu.inflate(R.menu.popup_menu);
                     MenuItem item = popupMenu.getMenu().getItem(1);
-                    SpannableString s = new SpannableString("HAPUS MENU");
+                    SpannableString s = new SpannableString("DELETE MENU");
                     s.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ctx, R.color.red)), 0, s.length(), 0);
                     item.setTitle(s);
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

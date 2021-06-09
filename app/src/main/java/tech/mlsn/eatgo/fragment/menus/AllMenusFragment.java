@@ -75,7 +75,7 @@ public class AllMenusFragment extends Fragment {
         rvMenu.setLayoutManager(new LinearLayoutManager(getContext()));
         rvMenu.setHasFixedSize(true);
         listMenu = new ArrayList<>();
-        adapter = new MenuAdapter(getContext(), listMenu);
+        adapter = new MenuAdapter(getContext(), listMenu, spManager.getSpRole());
         rvMenu.setAdapter(adapter);
     }
 
@@ -133,24 +133,28 @@ public class AllMenusFragment extends Fragment {
             @Override
             public void onItemClick(View view, AllMenuDataResponse obj, int position) {
                 Bundle data = new Bundle();
+                data.putString("id_menu", obj.getIdMenu());
                 Tools.addFragment(getActivity(), new DetailMenuFragment(), data, "detail" );
             }
         });
 
-        adapter.setOnEditClickListener(new MenuAdapter.OnEditClickListener() {
-            @Override
-            public void onItemClick(View view, AllMenuDataResponse obj, int position) {
-                Bundle data = new Bundle();
-                Tools.addFragment(getActivity(), new UpdateMenuFragment(), data, "update-menu");
-            }
-        });
+        if (spManager.getSpRole().equalsIgnoreCase("resto")){
+            adapter.setOnEditClickListener(new MenuAdapter.OnEditClickListener() {
+                @Override
+                public void onItemClick(View view, AllMenuDataResponse obj, int position) {
+                    Bundle data = new Bundle();
+                    data.putString("id_menu", obj.getIdMenu());
+                    Tools.addFragment(getActivity(), new UpdateMenuFragment(), data, "update-menu");
+                }
+            });
 
-        adapter.setOnDeleteClickListener(new MenuAdapter.OnDeleteClickListener() {
-            @Override
-            public void onItemClick(View view, AllMenuDataResponse obj, int position) {
-                showDialogDelete(obj.getIdMenu());
-            }
-        });
+            adapter.setOnDeleteClickListener(new MenuAdapter.OnDeleteClickListener() {
+                @Override
+                public void onItemClick(View view, AllMenuDataResponse obj, int position) {
+                    showDialogDelete(obj.getIdMenu());
+                }
+            });
+        }
     }
 
     private void getALlMenu(String id_restaurant){

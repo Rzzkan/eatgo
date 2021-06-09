@@ -6,7 +6,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import tech.mlsn.eatgo.response.BaseResponse;
+import tech.mlsn.eatgo.response.DashboardAdminResponse;
 import tech.mlsn.eatgo.response.RestaurantInfoResponse;
+import tech.mlsn.eatgo.response.chat.DetailChatResponse;
 import tech.mlsn.eatgo.response.dashboard.SlidersResponse;
 import tech.mlsn.eatgo.response.login.LoginResponse;
 import tech.mlsn.eatgo.response.menu.AllMenuResponse;
@@ -184,6 +186,32 @@ public interface ApiInterface {
     @POST("getMenu.php")
     Call<MenuResponse>getMenu(
             @Field("id_menu") String id_menu
+    );
+
+    @GET("adminDashboard.php")
+    Call<DashboardAdminResponse>getAdminDashboard();
+
+    @FormUrlEncoded
+    @POST("addChat.php")
+    Call<BaseResponse>addChat(
+            @Field("id_from") String id_from,
+            @Field("id_to") String id_to,
+            @Field("message") String message,
+            @Field("date") String date
+    );
+
+
+    @FormUrlEncoded
+    @POST("getAllChat.php")
+    Call<DetailChatResponse>getAllChat(
+            @Field("id_from") String id_from
+    );
+
+    @FormUrlEncoded
+    @POST("getDetailChat.php")
+    Call<DetailChatResponse>getDetailChat(
+            @Field("id_from") String id_from,
+            @Field("id_to") String id_to
     );
 
 

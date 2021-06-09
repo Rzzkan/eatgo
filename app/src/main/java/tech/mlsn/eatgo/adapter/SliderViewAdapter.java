@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.PopupMenu;
@@ -68,13 +69,13 @@ public class SliderViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
         public ImageView ivMenu, ivMore;
-        public View lyt_parent;
+        public RelativeLayout lyt_parent;
 
         public OriginalViewHolder(View v) {
             super(v);
             ivMenu  = v.findViewById(R.id.ivMenu);
             ivMore = v.findViewById(R.id.ivMore);
-            lyt_parent = v.findViewById(R.id.lyt_parent);
+            lyt_parent = v.findViewById(R.id.lytParent);
         }
     }
 
