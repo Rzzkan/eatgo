@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Eatgo - Live Restaurant Daeals</string>
+    <string name="app_name">Live Restaurant Deals</string>
     <string name="register_title">Registration</string>
     <string name="update_pw_title">Update Password</string>
     <string name="profile_title">Profile</string>

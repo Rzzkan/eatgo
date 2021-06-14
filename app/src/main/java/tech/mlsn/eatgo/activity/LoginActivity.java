@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.karan.churi.PermissionManager.PermissionManager;
@@ -60,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         permissionManager = new PermissionManager() {};
         permissionManager.checkAndRequestPermissions(this);
 
+        Glide.with(this).load(R.drawable.logo_eatgo).into(ivLogo);
         if (spManager.getSpIsSigned()){
             startActivity(new Intent(this, MainActivity.class)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
