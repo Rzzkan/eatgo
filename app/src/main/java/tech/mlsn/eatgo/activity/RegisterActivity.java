@@ -166,6 +166,10 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
         }
 
+        if (role.equalsIgnoreCase("")){
+            valid = false;
+        }
+
         if (!etPhone.getText().toString().matches("^[1-9][0-9]*$")){
             lytPhone.setError("Numbers Must not start with 0");
             valid = false;
