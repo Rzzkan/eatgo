@@ -18,6 +18,7 @@ import tech.mlsn.eatgo.fragment.chats.AllChatsFragment;
 import tech.mlsn.eatgo.fragment.dashboard.AdminDashboardFragment;
 import tech.mlsn.eatgo.fragment.dashboard.RestoDasboardFragment;
 import tech.mlsn.eatgo.fragment.dashboard.UserDashboardFragment;
+import tech.mlsn.eatgo.fragment.orders.AllOrdersFragment;
 import tech.mlsn.eatgo.fragment.restaurants.AllRestaurantFragment;
 import tech.mlsn.eatgo.fragment.users.AllUsersFragment;
 import tech.mlsn.eatgo.network.ApiClient;
@@ -73,11 +74,14 @@ public class MainActivity extends AppCompatActivity {
                             Tools.removeAllFragment(MainActivity.this,new AdminDashboardFragment(),"dashboard-admin");
                         }
                         break;
-                    case R.id.nav_all_user:
-                        Tools.removeAllFragment(MainActivity.this, new AllUsersFragment(),"users");
-                        break;
-                    case R.id.nav_all_resto:
-                        Tools.removeAllFragment(MainActivity.this, new AllRestaurantFragment(),"resto");
+//                    case R.id.nav_all_user:
+//                        Tools.removeAllFragment(MainActivity.this, new AllUsersFragment(),"users");
+//                        break;
+//                    case R.id.nav_all_resto:
+//                        Tools.removeAllFragment(MainActivity.this, new AllRestaurantFragment(),"resto");
+//                        break;
+                    case R.id.nav_all_order:
+                        Tools.removeAllFragment(MainActivity.this, new AllOrdersFragment(),"order");
                         break;
                     case R.id.nav_chat:
                         Tools.removeAllFragment(MainActivity.this, new AllChatsFragment(),"chat");
@@ -95,14 +99,10 @@ public class MainActivity extends AppCompatActivity {
     private void handleRole(){
         if (spManager.getSpRole().equalsIgnoreCase("user")){
             navigation.getMenu().getItem(1).setVisible(false);
-            navigation.getMenu().getItem(2).setVisible(false);
         }else if(spManager.getSpRole().equalsIgnoreCase("resto")){
+        }else{
             navigation.getMenu().getItem(1).setVisible(false);
             navigation.getMenu().getItem(2).setVisible(false);
-        }else{
-            navigation.getMenu().getItem(1).setVisible(true);
-            navigation.getMenu().getItem(2).setVisible(true);
-            navigation.getMenu().getItem(3).setVisible(false);
 
         }
     }

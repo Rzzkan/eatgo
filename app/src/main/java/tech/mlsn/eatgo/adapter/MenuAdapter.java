@@ -115,7 +115,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 view.tvStatus.setVisibility(View.GONE);
             }
 
-            Glide.with(ctx).load(ApiClient.BASE_URL+x.getImage()).into(view.ivMenu);
+            Glide.with(ctx).load(ApiClient.BASE_URL+x.getImage()).centerCrop().into(view.ivMenu);
 
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
                 @Override

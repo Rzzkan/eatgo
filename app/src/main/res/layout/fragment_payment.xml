@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    tools:context=".fragment.orders.PaymentFragment">
+
+    <LinearLayout
+        android:id="@+id/lytEG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rgPaymentMethod"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_baseline_stars_24" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="Rp. 10.000"
+                android:textColor="@color/text"
+                android:textSize="@dimen/heading_3"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="EG Point"
+                android:textAlignment="center"
+                android:textColor="@color/text" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rgPaymentMethod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView4"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbCash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cash" />
+
+        <RadioButton
+            android:id="@+id/rbPoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EG Point" />
+
+        <RadioButton
+            android:id="@+id/rbOther"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Other" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Payment Method"
+        android:textSize="@dimen/heading_2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tvPrice"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Total"
+        android:textSize="@dimen/heading_2" />
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btnConfirm"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Rp. 15.000"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/heading_1"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Confirm" />
+
+    <LinearLayout
+        android:id="@+id/lytTransfer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tvPrice"
+        android:layout_below="@id/rgPayment"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvBank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mandiri"
+            android:textAlignment="center"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/heading_2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvAccountNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="137 00 137889921"
+            android:textAlignment="center"
+            android:textSize="@dimen/heading_1" />
+
+        <TextView
+            android:id="@+id/tvAccountName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PT Eat Go Indonesia"
+            android:textAlignment="center"
+            android:textSize="@dimen/heading_2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lytWallet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tvPrice"
+        android:layout_below="@id/rgPayment"
+        android:layout_margin="15dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="08574321000"
+            android:textAlignment="center"
+            android:textSize="@dimen/heading_2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eat Go Indonesia"
+            android:textAlignment="center"
+            android:textSize="@dimen/heading_2" />
+    </LinearLayout>
+
+    <com.aagito.imageradiobutton.RadioImageGroup
+        android:id="@+id/rgPayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rgPaymentMethod"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.aagito.imageradiobutton.RadioImageButton
+            android:id="@+id/rbTransfer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            app:drawableIcon="@drawable/atm_bersama"
+            app:iconPosition="top"
+            app:iconSize="48dp"
+            app:selectedBackgroundColor="@color/grey"
+            app:selectedIconColor="@color/white"
+            app:selectedTextColor="@color/white"
+            app:text="Transfer Bank" />
+
+        <com.aagito.imageradiobutton.RadioImageButton
+            android:id="@+id/rbOvo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            app:drawableIcon="@drawable/ovo"
+            app:iconPosition="top"
+            app:iconSize="48dp"
+            app:selectedBackgroundColor="@color/grey"
+            app:selectedIconColor="@color/white"
+            app:selectedTextColor="@color/white"
+            app:text="OVO" />
+
+
+        <com.aagito.imageradiobutton.RadioImageButton
+            android:id="@+id/rbGopay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            app:drawableIcon="@drawable/gopay"
+            app:iconPosition="top"
+            app:iconSize="48dp"
+            app:selectedBackgroundColor="@color/grey"
+            app:selectedIconColor="@color/white"
+            app:selectedTextColor="@color/white"
+            app:text="GoPay" />
+
+    </com.aagito.imageradiobutton.RadioImageGroup>
+</RelativeLayout>

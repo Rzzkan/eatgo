@@ -119,7 +119,7 @@ public class RestaurantProfileFragment extends Fragment {
             public void onClick(View v) {
                 Bundle data = new Bundle();
                 data.putString("id_restaurant",id_restaurant);
-                Tools.addFragment(getActivity(), new AllMenusFragment(),data,"menus");
+                Tools.addFragment(getActivity(), new RestaurantMenuFragment(),data,"menus");
             }
         });
 

@@ -7,6 +7,60 @@
     android:layout_height="match_parent"
     tools:context=".fragment.menus.DetailMenuFragment">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/lytBuy"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-40dp"
+        android:visibility="visible"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="60dp"
+                android:layout_height="3dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_10px"
+                android:background="@color/grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_20px"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="@dimen/margin_20px"
+                android:layout_marginBottom="40dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnListOrders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10px"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_rounded_outline"
+                    android:text="to List Orders"
+                    android:textColor="@color/red_apple" />
+
+                <Button
+                    android:id="@+id/btnBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10px"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_rounded"
+                    android:text="Buy Now" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
     <ImageView
         android:id="@+id/ivMenu"
         android:layout_width="match_parent"
@@ -16,6 +70,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/lytBuy"
         android:layout_below="@id/ivMenu"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
@@ -65,7 +120,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvDescription"

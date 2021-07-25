@@ -87,12 +87,16 @@ public class ChatDetailFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             name = bundle.getString("to_name","name");
-            img = bundle.getString("to_image","R.drawable.ic_male");
+            img = bundle.getString("to_image","");
             id_from = bundle.getString("id_from","1");
             id_to = bundle.getString("id_to","2");
-            Glide.with(getActivity()).load(img).centerInside().into(imgProfile);
+
             tvName.setText(name);
-            Glide.with(getContext()).load(ApiClient.BASE_URL+img).into(imgProfile);
+            if (img.equalsIgnoreCase("")){
+                Glide.with(getActivity()).load(R.drawable.logo_eatgo).centerInside().into(imgProfile);
+            }else{
+                Glide.with(getContext()).load(ApiClient.BASE_URL+img).into(imgProfile);
+            }
         }
     }
 

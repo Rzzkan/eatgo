@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +40,7 @@ public class RestoDasboardFragment extends Fragment {
     TextView tvNameRestaurant, tvAddress;
     Button btnAllmenu, btnReview;
     RecyclerView rvReview;
+    Switch swOpen;
 
 
     SPManager spManager;
@@ -55,6 +58,7 @@ public class RestoDasboardFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_resto_dasboard, container, false);
         initialization(view);
         btnListener();
+        swListener();
         return view;
     }
 
@@ -68,6 +72,7 @@ public class RestoDasboardFragment extends Fragment {
         tvAddress = view.findViewById(R.id.tvAddress);
         btnAllmenu = view.findViewById(R.id.btnAllMenu);
         btnReview = view.findViewById(R.id.btnReview);
+        swOpen = view.findViewById(R.id.swOpen);
 
         rvReview = view.findViewById(R.id.rvReview);
         rvReview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -78,6 +83,7 @@ public class RestoDasboardFragment extends Fragment {
 
         getRestoInfo(spManager.getSpIdResto());
         getReview(spManager.getSpIdResto());
+        Glide.with(getActivity()).load(ApiClient.BASE_URL+ spManager.getSpImgResto()).centerCrop().into(ivBanner);
     }
 
     private void getRestoInfo(String id){
@@ -90,7 +96,6 @@ public class RestoDasboardFragment extends Fragment {
             public void onResponse(Call<RestaurantInfoResponse> call, Response<RestaurantInfoResponse> response) {
                 if (response.body().getSuccess()==1) {
                     snackbar.snackSuccess("Success");
-                    Glide.with(getContext()).load(ApiClient.BASE_URL+ response.body().getData().getImage()).centerCrop().into(ivBanner);
                     tvNameRestaurant.setText(response.body().getData().getName());
                     tvAddress.setText(response.body().getData().getAddress());
                 } else{
@@ -147,5 +152,22 @@ public class RestoDasboardFragment extends Fragment {
                 snackbar.snackInfo("No Connection");
             }
         });
+    }
+
+    private void swListener(){
+        swOpen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               if (isChecked){
+                   swOpen.setText("Close Restaurant");
+               }else {
+                   swOpen.setText("Open Restaurant");
+               }
+            }
+        });
+    }
+
+    private void setOpen(Boolean open){
+
     }
 }

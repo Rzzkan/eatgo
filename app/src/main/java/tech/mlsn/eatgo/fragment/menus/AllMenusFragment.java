@@ -48,6 +48,7 @@ public class AllMenusFragment extends Fragment {
     SnackbarHandler snackbar;
     ApiInterface apiInterface;
 
+    String id_restaurant ="";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,9 +84,11 @@ public class AllMenusFragment extends Fragment {
         Bundle data = this.getArguments();
         if (data.getBoolean("active")){
             getALlMenuActive(data.getString("id_restaurant"));
+            id_restaurant = data.getString("id_restaurant");
             btnAddMenu.setVisibility(View.GONE);
         }else {
             getALlMenu(data.getString("id_restaurant"));
+            id_restaurant = data.getString("id_restaurant");
         }
 
     }
@@ -134,6 +137,7 @@ public class AllMenusFragment extends Fragment {
             public void onItemClick(View view, AllMenuDataResponse obj, int position) {
                 Bundle data = new Bundle();
                 data.putString("id_menu", obj.getIdMenu());
+                data.putString("id_restaurant", id_restaurant);
                 Tools.addFragment(getActivity(), new DetailMenuFragment(), data, "detail" );
             }
         });

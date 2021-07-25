@@ -60,5 +60,10 @@ dependencies {
     implementation 'com.github.yalantis:ucrop:2.2.2'
 
     implementation 'com.github.smarteist:autoimageslider:1.4.0' // image slider
+    implementation 'com.github.aagitoEx:imageradiobutton:1.0'
+
+
+    //qr scan by zxing
+    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
 
 }

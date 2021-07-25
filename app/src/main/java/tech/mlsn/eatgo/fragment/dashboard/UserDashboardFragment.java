@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smarteist.autoimageslider.SliderView;
@@ -54,6 +55,9 @@ public class UserDashboardFragment extends Fragment  {
     Button btnSearch;
     SliderView imgSlider;
     RecyclerView rvDashboard;
+    Button btnScan;
+    TextView tvEG;
+    Double lat=0.0, lng=0.0;
 
     SliderAdapter sliderAdapter;
 
@@ -75,7 +79,9 @@ public class UserDashboardFragment extends Fragment  {
         View view = inflater.inflate(R.layout.fragment_user_dashboard, container, false);
         initialization(view);
         getSlider();
+        getRestaurant(lat,lng);
         itemClickListener();
+        btnListener();
         return view;
     }
 
@@ -88,6 +94,8 @@ public class UserDashboardFragment extends Fragment  {
         btnSearch = view.findViewById(R.id.btnSearch);
         imgSlider = view.findViewById(R.id.imageSlider);
         rvDashboard = view.findViewById(R.id.rvDashboard);
+        btnScan = view.findViewById(R.id.btnScan);
+        tvEG = view.findViewById(R.id.tvEG);
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -103,9 +111,6 @@ public class UserDashboardFragment extends Fragment  {
         listResto = new ArrayList<>();
         adapter = new UserDashboardAdapter(getContext(), listResto);
         rvDashboard.setAdapter(adapter);
-
-
-
     }
 
     private void getRestaurant(Double lat, Double lng){
@@ -148,7 +153,6 @@ public class UserDashboardFragment extends Fragment  {
 
     private void getSlider(){
         Call<SlidersResponse> getSlider = apiInterface.getAllSliders();
-
         getSlider.enqueue(new Callback<SlidersResponse>() {
             @Override
             public void onResponse(Call<SlidersResponse> call, Response<SlidersResponse> response) {
@@ -168,6 +172,47 @@ public class UserDashboardFragment extends Fragment  {
             @Override
             public void onFailure(Call<SlidersResponse> call, Throwable t) {
                 snackbar.snackInfo("No Connection");
+            }
+        });
+    }
+
+    private void getPoint(){
+//        Call<SlidersResponse> getSlider = apiInterface.getAllSliders();
+//        getSlider.enqueue(new Callback<SlidersResponse>() {
+//            @Override
+//            public void onResponse(Call<SlidersResponse> call, Response<SlidersResponse> response) {
+//                if (response.body().getSuccess()==1) {
+//                    for (int i=0; i<response.body().getData().size();i++){
+//                        sliderAdapter.addItem(new SliderDataResponse(
+//                                response.body().getData().get(i).getIdSlider(),
+//                                response.body().getData().get(i).getImage()
+//                        ));
+//
+//                    }
+//                    snackbar.snackSuccess("Success");
+//                } else{
+//                    snackbar.snackError("Failed");
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<SlidersResponse> call, Throwable t) {
+//                snackbar.snackInfo("No Connection");
+//            }
+//        });
+    }
+
+    private void btnListener(){
+        btnScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.addFragment(getActivity(),new ScanFragment(), null,"scan");
+            }
+        });
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.getFilter().filter(etSearch.getText().toString());
             }
         });
     }
@@ -209,9 +254,8 @@ public class UserDashboardFragment extends Fragment  {
         } else {
             Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (locationGPS != null) {
-                double lat = locationGPS.getLatitude();
-                double lng = locationGPS.getLongitude();
-                getRestaurant(lat,lng);
+                lat = locationGPS.getLatitude();
+                lng = locationGPS.getLongitude();
                 snackbar.snackSuccess(lat+", "+lng);
             } else {
                 snackbar.snackError("Failed");

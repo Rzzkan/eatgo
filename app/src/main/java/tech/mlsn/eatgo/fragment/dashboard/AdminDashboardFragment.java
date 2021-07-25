@@ -2,6 +2,7 @@ package tech.mlsn.eatgo.fragment.dashboard;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tech.mlsn.eatgo.R;
 import tech.mlsn.eatgo.adapter.SliderAdapter;
+import tech.mlsn.eatgo.fragment.restaurants.AllRestaurantFragment;
+import tech.mlsn.eatgo.fragment.users.AllUsersFragment;
 import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.network.ApiInterface;
 import tech.mlsn.eatgo.response.DashboardAdminResponse;
@@ -29,6 +32,8 @@ import tech.mlsn.eatgo.tools.Tools;
 public class AdminDashboardFragment extends Fragment {
     SliderView imgSlider;
     SliderAdapter sliderAdapter;
+    
+    CardView cardUsers, cardRestaurants, cardReviews, cardMenus;
 
     Button btnCustomize;
     TextView tvUser, tvRestaurant, tvReviewers, tvMenus;
@@ -47,6 +52,7 @@ public class AdminDashboardFragment extends Fragment {
         btnListener();
         getSlider();
         getAdminDashboard();
+        cardClickListener();
         return view;
     }
 
@@ -61,6 +67,10 @@ public class AdminDashboardFragment extends Fragment {
         tvReviewers = view.findViewById(R.id.tvTotalReviews);
         tvMenus = view.findViewById(R.id.tvTotalMenus);
         btnCustomize = view.findViewById(R.id.btnCustom);
+        cardUsers = view.findViewById(R.id.cardUsers);
+        cardMenus = view.findViewById(R.id.cardMenus);
+        cardRestaurants = view.findViewById(R.id.cardRestaurants);
+        cardReviews = view.findViewById(R.id.cardReviews);
 
         sliderAdapter = new SliderAdapter(getContext());
         imgSlider.setSliderAdapter(sliderAdapter);
@@ -119,6 +129,22 @@ public class AdminDashboardFragment extends Fragment {
             @Override
             public void onFailure(Call<DashboardAdminResponse> call, Throwable t) {
                 snackbar.snackInfo("No Connection");
+            }
+        });
+    }
+
+    private void cardClickListener(){
+        cardUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.addFragment(getActivity(), new AllUsersFragment(),null, "all-users");
+            }
+        });
+
+        cardRestaurants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.addFragment(getActivity(), new AllRestaurantFragment(), null, "all-restaurant");
             }
         });
     }
