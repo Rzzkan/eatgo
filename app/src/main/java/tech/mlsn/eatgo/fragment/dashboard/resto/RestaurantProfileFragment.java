@@ -145,8 +145,7 @@ public class RestaurantProfileFragment extends Fragment {
         ibCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("0"+phone));
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "0"+phone));
                 startActivity(intent);
             }
         });
@@ -247,7 +246,7 @@ public class RestaurantProfileFragment extends Fragment {
         final RatingBar rating = dialog.findViewById(R.id.ratingBar);
         final EditText etReview = dialog.findViewById(R.id.etReview);
         final Button btnAction = dialog.findViewById(R.id.btnAction);
-        final ImageButton btnClose = dialog.findViewById(R.id.btnAction);
+        final ImageButton btnClose = dialog.findViewById(R.id.btnClose);
 
         rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override

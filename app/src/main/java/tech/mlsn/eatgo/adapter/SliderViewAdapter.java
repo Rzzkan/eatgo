@@ -73,7 +73,7 @@ public class SliderViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public OriginalViewHolder(View v) {
             super(v);
-            ivMenu  = v.findViewById(R.id.ivMenu);
+            ivMenu  = v.findViewById(R.id.ivSlider);
             ivMore = v.findViewById(R.id.ivMore);
             lyt_parent = v.findViewById(R.id.lytParent);
         }

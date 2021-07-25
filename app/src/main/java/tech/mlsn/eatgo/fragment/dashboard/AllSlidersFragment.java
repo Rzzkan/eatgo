@@ -82,7 +82,6 @@ public class AllSlidersFragment extends Fragment {
 
     private void getSlider(){
         Call<SlidersResponse> getSlider = apiInterface.getAllSliders();
-
         getSlider.enqueue(new Callback<SlidersResponse>() {
             @Override
             public void onResponse(Call<SlidersResponse> call, Response<SlidersResponse> response) {
@@ -94,6 +93,7 @@ public class AllSlidersFragment extends Fragment {
                         ));
 
                     }
+                    adapter.notifyDataSetChanged();
                     snackbar.snackSuccess("Success");
                 } else{
                     snackbar.snackError("Failed");

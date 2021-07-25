@@ -83,7 +83,6 @@ public class RestoDasboardFragment extends Fragment {
 
         getRestoInfo(spManager.getSpIdResto());
         getReview(spManager.getSpIdResto());
-        Glide.with(getActivity()).load(ApiClient.BASE_URL+ spManager.getSpImgResto()).centerCrop().into(ivBanner);
     }
 
     private void getRestoInfo(String id){
@@ -98,6 +97,7 @@ public class RestoDasboardFragment extends Fragment {
                     snackbar.snackSuccess("Success");
                     tvNameRestaurant.setText(response.body().getData().getName());
                     tvAddress.setText(response.body().getData().getAddress());
+                    Glide.with(getContext()).load(ApiClient.BASE_URL+ spManager.getSpImgResto()).centerCrop().into(ivBanner);
                 } else{
                     snackbar.snackError("Failed");
                 }
