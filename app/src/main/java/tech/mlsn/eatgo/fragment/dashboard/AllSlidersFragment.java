@@ -75,7 +75,7 @@ public class AllSlidersFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.addFragment(getActivity(), new AddSliderFragment(), null, "add-slider");
+//                Tools.addFragment(getActivity(), new AddSliderFragment(), null, "add-slider");
             }
         });
     }

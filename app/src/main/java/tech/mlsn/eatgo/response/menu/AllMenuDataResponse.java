@@ -29,11 +29,14 @@ public class AllMenuDataResponse {
     @SerializedName("price")
     @Expose
     private String price;
+    @SerializedName("point_earned")
+    @Expose
+    private String pointEarned;
     @SerializedName("is_active")
     @Expose
     private String isActive;
 
-    public AllMenuDataResponse(String idMenu, String idRestaurant, String name, String description, String category, String image, String price, String isActive) {
+    public AllMenuDataResponse(String idMenu, String idRestaurant, String name, String description, String category, String image, String price, String pointEarned, String isActive) {
         this.idMenu = idMenu;
         this.idRestaurant = idRestaurant;
         this.name = name;
@@ -41,6 +44,7 @@ public class AllMenuDataResponse {
         this.category = category;
         this.image = image;
         this.price = price;
+        this.pointEarned = pointEarned;
         this.isActive = isActive;
     }
 
@@ -98,6 +102,14 @@ public class AllMenuDataResponse {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getPointEarned() {
+        return pointEarned;
+    }
+
+    public void setPointEarned(String pointEarned) {
+        this.pointEarned = pointEarned;
     }
 
     public String getIsActive() {

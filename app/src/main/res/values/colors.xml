@@ -23,4 +23,8 @@
     <color name="color_success">#4CAF50</color>
 
     <color name="text">@color/grey</color>
+
+    <color name="ucrop_color_toolbar">@color/red_apple</color>
+    <color name="ucrop_color_statusbar">@color/red_rusty</color>
+    <color name="ucrop_color_widget_active">@color/red_apple</color>
 </resources>

@@ -7,6 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import tech.mlsn.eatgo.response.BaseResponse;
 import tech.mlsn.eatgo.response.DashboardAdminResponse;
+import tech.mlsn.eatgo.response.PointResponse;
 import tech.mlsn.eatgo.response.RestaurantInfoResponse;
 import tech.mlsn.eatgo.response.chat.DetailChatResponse;
 import tech.mlsn.eatgo.response.dashboard.SlidersResponse;
@@ -97,6 +98,7 @@ public interface ApiInterface {
             @Field("description") String description,
             @Field("category") String category,
             @Field("price") String price,
+            @Field("point_earned") String point_earned,
             @Field("image") String img
     );
 
@@ -179,6 +181,7 @@ public interface ApiInterface {
             @Field("description") String description,
             @Field("category") String category,
             @Field("price") String price,
+            @Field("point_earned") String point_earned,
             @Field("image") String img
     );
 
@@ -200,7 +203,6 @@ public interface ApiInterface {
             @Field("date") String date
     );
 
-
     @FormUrlEncoded
     @POST("getAllChat.php")
     Call<DetailChatResponse>getAllChat(
@@ -214,7 +216,17 @@ public interface ApiInterface {
             @Field("id_to") String id_to
     );
 
+    @FormUrlEncoded
+    @POST("getPoint.php")
+    Call<PointResponse>getPoint(
+            @Field("id_user") String id_user
+    );
 
+    @FormUrlEncoded
+    @POST("setActiveResto.php")
+    Call<BaseResponse>setActive(
+            @Field("id_restaurant") String id_restaurant
+    );
 
 
 

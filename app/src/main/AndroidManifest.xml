@@ -4,6 +4,8 @@
     package="tech.mlsn.eatgo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -29,20 +31,20 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.MainActivity">
         </activity>
-        <activity android:name="tech.mlsn.eatgo.activity.ImagePickerActivity" />
-        <activity
-            android:name="com.yalantis.ucrop.UCropActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            tools:ignore="LockedOrientationActivity" />
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider" />
-        </provider>
+<!--        <activity android:name="tech.mlsn.eatgo.activity.ImagePickerActivity" />-->
+<!--        <activity-->
+<!--            android:name="com.yalantis.ucrop.UCropActivity"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
+<!--            tools:ignore="LockedOrientationActivity" />-->
+<!--        <provider-->
+<!--            android:name="androidx.core.content.FileProvider"-->
+<!--            android:authorities="${applicationId}.fileprovider"-->
+<!--            android:exported="false"-->
+<!--            android:grantUriPermissions="true">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--                android:resource="@xml/file_provider" />-->
+<!--        </provider>-->
     </application>
 </manifest>

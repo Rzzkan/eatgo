@@ -102,6 +102,7 @@ public class RestaurantMenuFragment extends Fragment {
                                 data.getCategory(),
                                 data.getImage(),
                                 data.getPrice(),
+                                data.getPointEarned(),
                                 data.getIsActive()
                         ));
                     }

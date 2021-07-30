@@ -126,7 +126,7 @@ public class AllMenusFragment extends Fragment {
         btnAddMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.addFragment(getActivity(), new AddMenuFragment(), null,"add-menu");
+//                Tools.addFragment(getActivity(), new AddMenuFragment(), null,"add-menu");
             }
         });
     }
@@ -148,7 +148,7 @@ public class AllMenusFragment extends Fragment {
                 public void onItemClick(View view, AllMenuDataResponse obj, int position) {
                     Bundle data = new Bundle();
                     data.putString("id_menu", obj.getIdMenu());
-                    Tools.addFragment(getActivity(), new UpdateMenuFragment(), data, "update-menu");
+//                    Tools.addFragment(getActivity(), new UpdateMenuFragment(), data, "update-menu");
                 }
             });
 
@@ -181,6 +181,7 @@ public class AllMenusFragment extends Fragment {
                            data.getCategory(),
                            data.getImage(),
                            data.getPrice(),
+                           data.getPointEarned(),
                            data.getIsActive()
                         ));
                     }
@@ -216,6 +217,7 @@ public class AllMenusFragment extends Fragment {
                                 data.getCategory(),
                                 data.getImage(),
                                 data.getPrice(),
+                                data.getPointEarned(),
                                 data.getIsActive()
                         ));
                     }
