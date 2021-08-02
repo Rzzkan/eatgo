@@ -5,6 +5,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +18,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 
@@ -29,10 +31,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tech.mlsn.eatgo.R;
+import tech.mlsn.eatgo.fragment.dashboard.resto.RestaurantProfileFragment;
 import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.network.ApiInterface;
+import tech.mlsn.eatgo.response.RestaurantInfoResponse;
 import tech.mlsn.eatgo.tools.SPManager;
 import tech.mlsn.eatgo.tools.SnackbarHandler;
+import tech.mlsn.eatgo.tools.Tools;
 
 public class FullScannerFragment extends Fragment implements MessageDialogFragment.MessageDialogListener,
         ZXingScannerView.ResultHandler, FormatSelectorDialogFragment.FormatSelectorDialogListener,
@@ -173,8 +178,9 @@ public class FullScannerFragment extends Fragment implements MessageDialogFragme
             r.play();
         } catch (Exception e) {}
         Uri uri = Uri.parse(rawResult.getText().toString());
-        result = uri.getLastPathSegment();
-        showMessageDialog("Scan Barcode Success");
+        result = uri.toString();
+//        result = uri.getLastPathSegment();
+        getBarcode();
     }
 
     public void showMessageDialog(String message) {
@@ -202,7 +208,9 @@ public class FullScannerFragment extends Fragment implements MessageDialogFragme
     public void onDialogPositiveClick(DialogFragment dialog) {
         // Resume the camera
 //        mScannerView.resumeCameraPreview(this);
-       getBarcode();
+        Bundle data = new Bundle();
+        data.putString("id_restaurant",result);
+        Tools.addFragment(getActivity(), new RestaurantProfileFragment(),data,"resto-profile");
     }
 
     @Override
@@ -250,34 +258,25 @@ public class FullScannerFragment extends Fragment implements MessageDialogFragme
     }
 
     private void getBarcode(){
-//        Call<ItemInspectionBarcodeResponse> getHistory = apiInterface.getInspectionBarcode(sharedPrefManager.getSPToken(),result);
-//        getHistory.enqueue(new Callback<ItemInspectionBarcodeResponse>() {
-//            @Override
-//            public void onResponse(Call<ItemInspectionBarcodeResponse> call, Response<ItemInspectionBarcodeResponse> response) {
-//                if (response.isSuccessful()){
-//                    ItemInspectionBarcode itemBarcode = response.body().getData();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("id_item",itemBarcode.getItemId());
-//                    bundle.putString("brand",itemBarcode.getBrand());
-//                    bundle.putString("model",itemBarcode.getModel());
-//                    bundle.putString("slug",itemBarcode.getSlug());
-//                    bundle.putString("slug_item",itemBarcode.getItem().getSlug());
-//                    bundle.putString("barcode",itemBarcode.getBarcode());
-//                    bundle.putString("file","");
-//                    bundle.putString("name","");
-//                    Tools.addFragment(getActivity(),new ToolsInspectionHistoryFragment()," re-inspection-activity",bundle);
-//                    snackbar.snackSuccess("Load History Success");
-//                }else{
-//                    snackbar.snackError("Not Valid Barcode");
-//                    mScannerView.resumeCameraPreview(resultHandler);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ItemInspectionBarcodeResponse> call, Throwable t) {
-//                snackbar.snackError("No Internet Connection");
-//                mScannerView.resumeCameraPreview(resultHandler);
-//            }
-//        });
+        Call<RestaurantInfoResponse> getResto = apiInterface.getRestoInfo(
+                result
+        );
+
+        getResto.enqueue(new Callback<RestaurantInfoResponse>() {
+            @Override
+            public void onResponse(Call<RestaurantInfoResponse> call, Response<RestaurantInfoResponse> response) {
+                if (response.body().getSuccess()==1) {
+                    snackbar.snackSuccess("Success");
+                    showMessageDialog("Scan Barcode Success Restaurant Found !");
+                } else{
+                    snackbar.snackError("Failed");
+                    mScannerView.resumeCameraPreview(resultHandler);
+                }
+            }
+            @Override
+            public void onFailure(Call<RestaurantInfoResponse> call, Throwable t) {
+                snackbar.snackInfo("No Connection");
+            }
+        });
     }
 }
