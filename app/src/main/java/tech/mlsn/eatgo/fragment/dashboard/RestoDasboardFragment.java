@@ -28,6 +28,7 @@ import tech.mlsn.eatgo.adapter.ReviewAdapter;
 import tech.mlsn.eatgo.fragment.menus.AllMenusFragment;
 import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.network.ApiInterface;
+import tech.mlsn.eatgo.response.BaseResponse;
 import tech.mlsn.eatgo.response.RestaurantInfoResponse;
 import tech.mlsn.eatgo.response.review.ReviewDataResponse;
 import tech.mlsn.eatgo.response.review.ReviewResponse;
@@ -97,6 +98,13 @@ public class RestoDasboardFragment extends Fragment {
                     snackbar.snackSuccess("Success");
                     tvNameRestaurant.setText(response.body().getData().getName());
                     tvAddress.setText(response.body().getData().getAddress());
+                    if (response.body().getData().getIsActive().equalsIgnoreCase("1")){
+                        swOpen.setText("Close Restaurant");
+                        swOpen.setChecked(true);
+                    }else {
+                        swOpen.setText("Open Restaurant");
+                        swOpen.setChecked(false);
+                    }
                     Glide.with(getContext()).load(ApiClient.BASE_URL+ spManager.getSpImgResto()).centerCrop().into(ivBanner);
                 } else{
                     snackbar.snackError("Failed");
@@ -159,15 +167,36 @@ public class RestoDasboardFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                if (isChecked){
+                   setOpen("1");
                    swOpen.setText("Close Restaurant");
                }else {
                    swOpen.setText("Open Restaurant");
+                   setOpen("0");
                }
             }
         });
     }
 
-    private void setOpen(Boolean open){
 
+    private void setOpen(String status){
+        Call<BaseResponse> setOpenResto = apiInterface.setActive(
+                spManager.getSpIdResto(),
+                status
+        );
+
+        setOpenResto.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.body().getSuccess()==1) {
+                    snackbar.snackSuccess("Success");
+                } else{
+                    snackbar.snackError("Failed");
+                }
+            }
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                snackbar.snackInfo("No Connection");
+            }
+        });
     }
 }

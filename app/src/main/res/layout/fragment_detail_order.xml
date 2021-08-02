@@ -44,7 +44,8 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_marginBottom="10dp"
-                        android:text="Date" />
+                        android:text="Date"
+                        android:textColor="@color/grey" />
 
                     <View
                         android:layout_width="match_parent"
@@ -66,7 +67,8 @@
                         android:layout_marginRight="5dp"
                         android:layout_marginBottom="10dp"
                         android:inputType="textMultiLine"
-                        android:text="Name" />
+                        android:text="Name"
+                        android:textColor="@color/grey" />
 
                     <View
                         android:layout_width="match_parent"
@@ -88,7 +90,8 @@
                         android:layout_marginRight="5dp"
                         android:layout_marginBottom="10dp"
                         android:inputType="text"
-                        android:text="Cash" />
+                        android:text="Cash"
+                        android:textColor="@color/grey" />
 
 
 
@@ -146,6 +149,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Total Price"
+                            android:textColor="@color/grey"
                             android:textStyle="bold" />
 
                         <TextView
@@ -153,9 +157,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textStyle="bold"
+                            android:text="Rp. 0"
                             android:textAlignment="textEnd"
-                            android:text="Rp. 0" />
+                            android:textColor="@color/grey"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
 
@@ -163,11 +168,11 @@
             </androidx.cardview.widget.CardView>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnAction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:text="Button" />
+                android:text="Action" />
 
         </LinearLayout>
     </ScrollView>

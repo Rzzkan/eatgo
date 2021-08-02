@@ -93,22 +93,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvNewOrder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPaidOrder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvProcessOrder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvDoneOrder"
+                android:id="@+id/rvOrder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

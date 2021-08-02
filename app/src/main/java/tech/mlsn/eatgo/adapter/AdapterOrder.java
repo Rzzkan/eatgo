@@ -77,7 +77,7 @@ public class AdapterOrder extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             OrdersDataResponse p = itemsFiltered.get(position);
             view.tvInvoice.setText("Rp." + p.getTotal());
             view.tvDate.setText(Tools.dateParserChat(p.getDate()));
-            view.tvName.setText(p.getIdUser());
+            view.tvName.setText(p.getUserName());
             view.lyt_Ripple.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -108,20 +108,38 @@ public class AdapterOrder extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 String charString = charSequence.toString();
                 if (charString.isEmpty()) {
                     itemsFiltered = items;
-                }else if (Integer.parseInt(charString)==1){
+                }else if (charString.equalsIgnoreCase("1")){
                     ArrayList<OrdersDataResponse> filteredList = new ArrayList<>();
                     for (OrdersDataResponse data : items) {
                         String status = data.getStatus();
-                        if(status.equalsIgnoreCase("")){
+                        if(status.equalsIgnoreCase("1")){
                             filteredList.add(data);
                         }
                     }
                     itemsFiltered = filteredList;
-                }else if (Integer.parseInt(charString)==0)  {
+                }else if (charString.equalsIgnoreCase("2"))  {
                     ArrayList<OrdersDataResponse> filteredList = new ArrayList<>();
                     for (OrdersDataResponse data : items) {
                         String  status = data.getStatus();
-                        if(status.equalsIgnoreCase("")){
+                        if(status.equalsIgnoreCase("2")){
+                            filteredList.add(data);
+                        }
+                    }
+                    itemsFiltered = filteredList;
+                }else if (charString.equalsIgnoreCase("3"))  {
+                    ArrayList<OrdersDataResponse> filteredList = new ArrayList<>();
+                    for (OrdersDataResponse data : items) {
+                        String  status = data.getStatus();
+                        if(status.equalsIgnoreCase("3")){
+                            filteredList.add(data);
+                        }
+                    }
+                    itemsFiltered = filteredList;
+                } else if (charString.equalsIgnoreCase("4"))  {
+                    ArrayList<OrdersDataResponse> filteredList = new ArrayList<>();
+                    for (OrdersDataResponse data : items) {
+                        String  status = data.getStatus();
+                        if(status.equalsIgnoreCase("3")){
                             filteredList.add(data);
                         }
                     }

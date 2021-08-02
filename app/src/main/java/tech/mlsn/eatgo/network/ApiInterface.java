@@ -7,6 +7,8 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import tech.mlsn.eatgo.response.BaseResponse;
 import tech.mlsn.eatgo.response.DashboardAdminResponse;
+import tech.mlsn.eatgo.response.DetailOrderResponse;
+import tech.mlsn.eatgo.response.OrdersResponse;
 import tech.mlsn.eatgo.response.PointResponse;
 import tech.mlsn.eatgo.response.RestaurantInfoResponse;
 import tech.mlsn.eatgo.response.chat.DetailChatResponse;
@@ -225,9 +227,24 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("setActiveResto.php")
     Call<BaseResponse>setActive(
-            @Field("id_restaurant") String id_restaurant
+            @Field("id_restaurant") String id_restaurant,
+            @Field("is_active") String is_active
     );
 
 
+    @GET("allOrders.php")
+    Call<OrdersResponse>getAllOrders();
 
+    @FormUrlEncoded
+    @POST("getOrderDetail.php")
+    Call<DetailOrderResponse>getDetailOrder(
+            @Field("id_order") String id_order
+    );
+
+    @FormUrlEncoded
+    @POST("setStatusOrder.php")
+    Call<BaseResponse>setStatusOrder(
+            @Field("id_order") String id_order,
+            @Field("status") String status
+    );
 }

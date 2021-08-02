@@ -18,6 +18,12 @@ public class OrdersDataResponse {
     @SerializedName("id_user")
     @Expose
     private String idUser;
+    @SerializedName("user_name")
+    @Expose
+    private String userName;
+    @SerializedName("user_phone")
+    @Expose
+    private String userPhone;
     @SerializedName("menu_name")
     @Expose
     private List<String> menuName = null;
@@ -30,12 +36,6 @@ public class OrdersDataResponse {
     @SerializedName("total")
     @Expose
     private String total;
-    @SerializedName("point_used")
-    @Expose
-    private String pointUsed;
-    @SerializedName("point_earned")
-    @Expose
-    private String pointEarned;
     @SerializedName("status")
     @Expose
     private String status;
@@ -46,16 +46,16 @@ public class OrdersDataResponse {
     @Expose
     private String date;
 
-    public OrdersDataResponse(String idOrder, String idRestaurant, String idUser, List<String> menuName, List<String> menuPrice, List<String> menuQty, String total, String pointUsed, String pointEarned, String status, String payment, String date) {
+    public OrdersDataResponse(String idOrder, String idRestaurant, String idUser, String userName, String userPhone, List<String> menuName, List<String> menuPrice, List<String> menuQty, String total, String status, String payment, String date) {
         this.idOrder = idOrder;
         this.idRestaurant = idRestaurant;
         this.idUser = idUser;
+        this.userName = userName;
+        this.userPhone = userPhone;
         this.menuName = menuName;
         this.menuPrice = menuPrice;
         this.menuQty = menuQty;
         this.total = total;
-        this.pointUsed = pointUsed;
-        this.pointEarned = pointEarned;
         this.status = status;
         this.payment = payment;
         this.date = date;
@@ -83,6 +83,22 @@ public class OrdersDataResponse {
 
     public void setIdUser(String idUser) {
         this.idUser = idUser;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
     }
 
     public List<String> getMenuName() {
@@ -115,22 +131,6 @@ public class OrdersDataResponse {
 
     public void setTotal(String total) {
         this.total = total;
-    }
-
-    public String getPointUsed() {
-        return pointUsed;
-    }
-
-    public void setPointUsed(String pointUsed) {
-        this.pointUsed = pointUsed;
-    }
-
-    public String getPointEarned() {
-        return pointEarned;
-    }
-
-    public void setPointEarned(String pointEarned) {
-        this.pointEarned = pointEarned;
     }
 
     public String getStatus() {
