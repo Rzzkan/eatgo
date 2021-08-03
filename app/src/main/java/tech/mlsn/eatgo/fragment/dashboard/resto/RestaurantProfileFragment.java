@@ -80,7 +80,6 @@ public class RestaurantProfileFragment extends Fragment {
         snackbar = new SnackbarHandler(getActivity());
         spManager = new SPManager(getContext());
 
-
         ivBanner = view.findViewById(R.id.ivBanner);
         tvNameRestaurant = view.findViewById(R.id.tvNameRestaurant);
         tvAddress = view.findViewById(R.id.tvAddress);

@@ -1,5 +1,8 @@
 package tech.mlsn.eatgo.network;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -236,15 +239,44 @@ public interface ApiInterface {
     Call<OrdersResponse>getAllOrders();
 
     @FormUrlEncoded
+    @POST("getOrderUser.php")
+    Call<OrdersResponse>getOrderUser(
+            @Field("id_user") String id_user
+    );
+
+    @FormUrlEncoded
     @POST("getOrderDetail.php")
     Call<DetailOrderResponse>getDetailOrder(
             @Field("id_order") String id_order
     );
 
     @FormUrlEncoded
+    @POST("getOrderDetailUser.php")
+    Call<DetailOrderResponse>getDetailOrderUser(
+            @Field("id_order") String id_order
+    );
+
+
+    @FormUrlEncoded
     @POST("setStatusOrder.php")
     Call<BaseResponse>setStatusOrder(
             @Field("id_order") String id_order,
             @Field("status") String status
+    );
+
+    @FormUrlEncoded
+    @POST("addOrder.php")
+    Call<BaseResponse>addOrder(
+            @Field("id_user") String id_user,
+            @Field("id_restaurant") String id_restaurant,
+            @Field("menu_name[]") ArrayList<String> menu_name,
+            @Field("menu_price[]") ArrayList<String> menu_price,
+            @Field("menu_qty[]") ArrayList<String> menu_qty,
+            @Field("total") String  total,
+            @Field("point_used") String  point_used,
+            @Field("point_earned") String  point_earned,
+            @Field("status") String  status,
+            @Field("payment") String  payment,
+            @Field("date") String  date
     );
 }

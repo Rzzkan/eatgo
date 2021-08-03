@@ -20,10 +20,20 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tech.mlsn.eatgo.R;
+import tech.mlsn.eatgo.model.CartModel;
 import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.network.ApiInterface;
+import tech.mlsn.eatgo.response.BaseResponse;
+import tech.mlsn.eatgo.response.menu.AllMenuDataResponse;
+import tech.mlsn.eatgo.response.menu.AllMenuResponse;
 import tech.mlsn.eatgo.tools.SPManager;
+import tech.mlsn.eatgo.tools.SQLiteDBHelper;
 import tech.mlsn.eatgo.tools.SnackbarHandler;
 import tech.mlsn.eatgo.tools.Tools;
 
@@ -35,10 +45,18 @@ public class PaymentFragment extends Fragment {
     TextView tvPrice;
     TextView tvEG;
     Button btnConfirm;
+    String id_restaurant="";
+    String payment ="";
+    ArrayList<String> listMenu;
+    ArrayList<String> listPrice;
+    ArrayList<String> listQty;
+
+    ArrayList<CartModel> items;
 
     SPManager spManager;
     SnackbarHandler snackbar;
     ApiInterface apiInterface;
+    SQLiteDBHelper dbHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +67,6 @@ public class PaymentFragment extends Fragment {
         radioListener();
         btnListener();
         getData();
-        getPoint();
         return view;
     }
 
@@ -57,6 +74,7 @@ public class PaymentFragment extends Fragment {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         snackbar = new SnackbarHandler(getActivity());
         spManager = new SPManager(getContext());
+        dbHelper = new SQLiteDBHelper(getActivity());
 
         lytEG = view.findViewById(R.id.lytEG);
         lytTransfer = view.findViewById(R.id.lytTransfer);
@@ -69,17 +87,15 @@ public class PaymentFragment extends Fragment {
         rbOvo = view.findViewById(R.id.rbOvo);
         rbTF = view.findViewById(R.id.rbTransfer);
         btnConfirm = view.findViewById(R.id.btnConfirm);
-    }
-
-
-    private void getPoint(){
-
+        tvPrice.setText(Tools.currency(String.valueOf(dbHelper.countTotal())));
+        items = new ArrayList<>();
+        items = dbHelper.getCartData();
     }
 
     private void  getData(){
         Bundle data = this.getArguments();
         if (data!=null){
-
+            id_restaurant = data.getString("id_restaurant","0");
         }
     }
 
@@ -91,6 +107,7 @@ public class PaymentFragment extends Fragment {
                     case R.id.rbCash:
                         rgPayment.setVisibility(View.GONE);
                         lytEG.setVisibility(View.GONE);
+                        payment = "Cash";
                         break;
                     case R.id.rbPoint:
                         rgPayment.setVisibility(View.GONE);
@@ -112,14 +129,17 @@ public class PaymentFragment extends Fragment {
                     case R.id.rbTransfer:
                         lytTransfer.setVisibility(View.VISIBLE);
                         lytWallet.setVisibility(View.GONE);
+                        payment ="Transfer";
                         break;
                     case R.id.rbOvo:
                         lytTransfer.setVisibility(View.GONE);
                         lytWallet.setVisibility(View.VISIBLE);
+                        payment ="OVO";
                         break;
                     case R.id.rbGopay:
                         lytTransfer.setVisibility(View.GONE);
                         lytWallet.setVisibility(View.VISIBLE);
+                        payment ="GOPAY";
                         break;
                 }
             }
@@ -130,8 +150,54 @@ public class PaymentFragment extends Fragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.removeAllFragment(getActivity(), new HistoryOrderFragment(), "history");
+               cartToList();
             }
         });
     }
+
+    private void postOrder(){
+        Call<BaseResponse> postOrder = apiInterface.addOrder(
+                spManager.getSpId(),
+                id_restaurant,
+                listMenu,
+                listPrice,
+                listQty,
+                String.valueOf(dbHelper.countTotal()),
+                "0",
+                "0",
+                "1",
+                payment,
+                ""
+        );
+
+        postOrder.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.body().getSuccess()==1) {
+                    snackbar.snackSuccess("Success");
+                    Tools.removeAllFragment(getActivity(), new HistoryOrderFragment(),"history");
+                } else{
+                    snackbar.snackError("Failed");
+                }
+            }
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                snackbar.snackInfo("No Connection");
+            }
+        });
+    }
+
+    private void cartToList(){
+        listMenu = new ArrayList<>();
+        listPrice = new ArrayList<>();
+        listQty = new ArrayList<>();
+        for (int i=0 ;i<items.size();i++){
+            listMenu.add(items.get(i).getName());
+            listPrice.add(String.valueOf(items.get(i).getPrice()));
+            listQty.add(String.valueOf(items.get(i).getQty()));
+        }
+       postOrder();
+    }
+
+
 }

@@ -109,6 +109,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:text="Category"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>

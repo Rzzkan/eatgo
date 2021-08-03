@@ -39,6 +39,7 @@ public class RestaurantMenuFragment extends Fragment {
     RecyclerView rvMenu;
     MenuAdapter adapter;
     ArrayList<AllMenuDataResponse> list;
+    String id_restaurant="";
 
     SPManager spManager;
     SnackbarHandler snackbar;
@@ -52,6 +53,7 @@ public class RestaurantMenuFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_restaurant_menu, container, false);
         initialization(view);
         getData();
+        inputListener();
         btnListener();
         itemClickListener();
         return view;
@@ -78,6 +80,7 @@ public class RestaurantMenuFragment extends Fragment {
     private void getData(){
         Bundle data = this.getArguments();
         if (data!=null){
+            id_restaurant = data.getString("id_restaurant");
             getALlMenuActive(data.getString("id_restaurant"));
         }
     }
@@ -151,7 +154,9 @@ public class RestaurantMenuFragment extends Fragment {
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.addFragment(getActivity(), new OrdersFragment(), null, "order");
+                Bundle data = new Bundle();
+                data.putString("id_restaurant", id_restaurant);
+                Tools.addFragment(getActivity(), new OrdersFragment(), data, "order");
             }
         });
 
@@ -162,6 +167,7 @@ public class RestaurantMenuFragment extends Fragment {
             @Override
             public void onItemClick(View view, AllMenuDataResponse obj, int position) {
                 Bundle data = new Bundle();
+                data.putString("id_restaurant", id_restaurant);
                 data.putString("id_menu", obj.getIdMenu());
                 Tools.addFragment(getActivity(), new DetailMenuFragment(), data, "detail" );
             }

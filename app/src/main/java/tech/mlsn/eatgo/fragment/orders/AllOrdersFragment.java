@@ -88,7 +88,7 @@ public class AllOrdersFragment extends Fragment {
         allOrders.enqueue(new Callback<OrdersResponse>() {
             @Override
             public void onResponse(Call<OrdersResponse> call, Response<OrdersResponse> response) {
-                if (response.body().getData().size()>0) {
+                if (response.body().getSuccess()==1) {
                     for (int i=0; i<response.body().getData().size();i++){
                         OrdersDataResponse data = response.body().getData().get(i);
                         listOrder.add(new OrdersDataResponse(

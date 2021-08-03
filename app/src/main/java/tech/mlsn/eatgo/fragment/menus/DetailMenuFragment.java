@@ -26,11 +26,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tech.mlsn.eatgo.R;
 import tech.mlsn.eatgo.fragment.orders.OrdersFragment;
+import tech.mlsn.eatgo.model.CartModel;
 import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.network.ApiInterface;
 import tech.mlsn.eatgo.response.menu.AllMenuDataResponse;
 import tech.mlsn.eatgo.response.menu.MenuResponse;
 import tech.mlsn.eatgo.tools.SPManager;
+import tech.mlsn.eatgo.tools.SQLiteDBHelper;
 import tech.mlsn.eatgo.tools.SnackbarHandler;
 import tech.mlsn.eatgo.tools.Tools;
 
@@ -40,9 +42,13 @@ public class DetailMenuFragment extends Fragment {
     CardView lytBuy;
     Button btnListOrders, btnBuy;
     String name, desc, img, price;
-    String id_restaurant ="";
+    String id_restaurant ="", id_menu="";
     int counter = 0;
+//    int id_cart=0;
 
+
+    SQLiteDBHelper dbHelper;
+    boolean insertData;
 
     SPManager spManager;
     SnackbarHandler snackbar;
@@ -63,6 +69,7 @@ public class DetailMenuFragment extends Fragment {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         snackbar = new SnackbarHandler(getActivity());
         spManager = new SPManager(getContext());
+        dbHelper = new SQLiteDBHelper(getActivity());
 
         ivMenu = view.findViewById(R.id.ivMenu);
         tvName = view.findViewById(R.id.tvName);
@@ -85,7 +92,9 @@ public class DetailMenuFragment extends Fragment {
         Bundle data = this.getArguments();
         if (data!=null){
             getMenu(data.getString("id_menu","0"));
-            id_restaurant = data.getString("id_restaurant");
+//            id_cart = data.getInt("id_cart",0);
+            id_menu = data.getString("id_menu","0");
+            id_restaurant = data.getString("id_restaurant","0");
         }
 
 
@@ -192,21 +201,22 @@ public class DetailMenuFragment extends Fragment {
                     snackbar.snackInfo("Cant Order 0");
                 }else {
                     if(con==1){
-//                        insertData = dbHelper.addData(id,slug,userId,name,weight,wholesalePrice,price,description,photo,stock,createdAt,updatedAt,active,counter);
-//                        if (insertData){
-//                            showSuccessCartDialog();
-//                        }else {
-//                            dbHelper.updateCart(new CartModel(id,slug,userId,name,weight,wholesalePrice,price,description,photo,stock,createdAt,updatedAt,active,counter));
+                        insertData = dbHelper.addData(new CartModel(Integer.valueOf(id_menu),id_restaurant, id_menu,name,counter,Integer.valueOf(price),Integer.valueOf(price)*counter,img,desc));
+                        if (insertData){
                             showSuccessCartDialog();
-//                        }
+                        }else {
+                            dbHelper.updateCart(new CartModel(Integer.valueOf(id_menu),id_restaurant, id_menu,name,counter,Integer.valueOf(price),Integer.valueOf(price)*counter,img,desc));
+                            showSuccessCartDialog();
+                        }
                     }else if(con==2){
-//                        insertData = dbHelper.addData(id,slug,userId,name,weight,wholesalePrice,price,description,photo,stock,createdAt,updatedAt,active,counter);
-//                        if (insertData){
-//
-//                        }else {
-//                            dbHelper.updateCart(new CartModel(id,slug,userId,name,weight,wholesalePrice,price,description,photo,stock,createdAt,updatedAt,active,counter));
-//                        }
-                        Tools.addFragment(getActivity(), new OrdersFragment(), null, "orders");
+                        insertData = dbHelper.addData(new CartModel(Integer.valueOf(id_menu),id_restaurant, id_menu,name,counter,Integer.valueOf(price),Integer.valueOf(price)*counter,img,desc));
+                        if (insertData){
+                        }else {
+                            dbHelper.updateCart(new CartModel(Integer.valueOf(id_menu),id_restaurant, id_menu,name,counter,Integer.valueOf(price),Integer.valueOf(price)*counter,img,desc));
+                        }
+                        Bundle data = new Bundle();
+                        data.putString("id_restaurant", id_restaurant);
+                        Tools.addFragment(getActivity(), new OrdersFragment(), data, "orders");
                     }
                 }
                 counter=0;
@@ -232,5 +242,7 @@ public class DetailMenuFragment extends Fragment {
         });
         dialog.show();
     }
+
+
 
 }
