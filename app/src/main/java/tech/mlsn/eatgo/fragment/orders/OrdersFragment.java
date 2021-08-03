@@ -118,9 +118,9 @@ public class OrdersFragment extends Fragment {
                             obj.getId_restaurant(),
                             obj.getId_menu(),
                             obj.getName(),
-                            obj.getQty(),
+                            total,
                             obj.getPrice(),
-                            obj.getTotal(),
+                            obj.getPrice()*total,
                             obj.getImg(),
                             obj.getDesc()
                     ));
@@ -135,9 +135,9 @@ public class OrdersFragment extends Fragment {
                         obj.getId_restaurant(),
                         obj.getId_menu(),
                         obj.getName(),
-                        obj.getQty(),
+                        total,
                         obj.getPrice(),
-                        obj.getTotal(),
+                        obj.getPrice()*total,
                         obj.getImg(),
                         obj.getDesc()
                 ));
@@ -155,7 +155,7 @@ public class OrdersFragment extends Fragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle    ("Confirmation");
         builder.setCancelable(false);
-        builder.setMessage("");
+        builder.setMessage("Order deleted !");
 //        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
 //            @Override
 //            public void onClick(DialogInterface dialog, int which) {

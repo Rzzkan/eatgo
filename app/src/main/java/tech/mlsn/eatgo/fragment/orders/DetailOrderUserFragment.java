@@ -31,7 +31,7 @@ import tech.mlsn.eatgo.tools.SnackbarHandler;
 import tech.mlsn.eatgo.tools.Tools;
 
 public class DetailOrderUserFragment extends Fragment {
-    TextView tvDate, tvName, tvPayment, tvTotal, name;
+    TextView tvDate, tvName, tvPayment, tvTotal, name, tvStatus;
     RecyclerView rvDetail;
     Button btnAction;
 
@@ -67,6 +67,7 @@ public class DetailOrderUserFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         tvPayment = view.findViewById(R.id.tvPayment);
         tvTotal = view.findViewById(R.id.tvTotal);
+        tvStatus = view.findViewById(R.id.tvStatus);
         btnAction = view.findViewById(R.id.btnAction);
 
         rvDetail = view.findViewById(R.id.rvDetail);
@@ -99,13 +100,18 @@ public class DetailOrderUserFragment extends Fragment {
                     status = data.getStatus();
                     if (status.equalsIgnoreCase("1")){
                         btnAction.setText("PAID");
+                        tvStatus.setText("Unpaid");
                     }else if (status.equalsIgnoreCase("2")){
                         btnAction.setText("PROCESS");
+                        tvStatus.setText("Paid");
                     }else if (status.equalsIgnoreCase("3")){
                         btnAction.setText("DONE");
+                        tvStatus.setText("Process");
                     }else if (status.equalsIgnoreCase("4")){
                         btnAction.setVisibility(View.GONE);
+                        tvStatus.setText("Done");
                     }
+
                     tvDate.setText(data.getDate());
                     tvName.setText(data.getUserName());
                     tvPayment.setText(data.getPayment());

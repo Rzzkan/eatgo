@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -20,7 +21,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +46,7 @@ public class PaymentFragment extends Fragment {
     RadioImageGroup rgPayment;
     RadioGroup rgPaymentMethod;
     RadioImageButton rbTF, rbOvo, rbGp;
+    RadioButton rbOther, rbCash;
     TextView tvPrice;
     TextView tvEG;
     Button btnConfirm;
@@ -86,10 +91,13 @@ public class PaymentFragment extends Fragment {
         rbGp = view.findViewById(R.id.rbGopay);
         rbOvo = view.findViewById(R.id.rbOvo);
         rbTF = view.findViewById(R.id.rbTransfer);
+        rbCash = view.findViewById(R.id.rbCash);
+        rbOther = view.findViewById(R.id.rbOther);
         btnConfirm = view.findViewById(R.id.btnConfirm);
         tvPrice.setText(Tools.currency(String.valueOf(dbHelper.countTotal())));
         items = new ArrayList<>();
         items = dbHelper.getCartData();
+        rbCash.setChecked(true);
     }
 
     private void  getData(){
@@ -167,7 +175,7 @@ public class PaymentFragment extends Fragment {
                 "0",
                 "1",
                 payment,
-                ""
+                getDate()
         );
 
         postOrder.enqueue(new Callback<BaseResponse>() {
@@ -199,5 +207,11 @@ public class PaymentFragment extends Fragment {
        postOrder();
     }
 
+    private String getDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date getCurrentDate = Calendar.getInstance().getTime();
+        String currentDate = sdf.format(getCurrentDate);
+        return currentDate;
+    }
 
 }
