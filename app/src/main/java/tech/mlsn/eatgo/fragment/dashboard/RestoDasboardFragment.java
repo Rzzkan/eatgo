@@ -25,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tech.mlsn.eatgo.R;
 import tech.mlsn.eatgo.adapter.ReviewAdapter;
+import tech.mlsn.eatgo.fragment.barcode.ViewBarcodeFragment;
 import tech.mlsn.eatgo.fragment.menus.AllMenusFragment;
 import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.network.ApiInterface;
@@ -39,7 +40,7 @@ import tech.mlsn.eatgo.tools.Tools;
 public class RestoDasboardFragment extends Fragment {
     ImageView ivBanner;
     TextView tvNameRestaurant, tvAddress;
-    Button btnAllmenu, btnReview;
+    Button btnAllmenu, btnReview, btnBarcode;
     RecyclerView rvReview;
     Switch swOpen;
 
@@ -73,6 +74,7 @@ public class RestoDasboardFragment extends Fragment {
         tvAddress = view.findViewById(R.id.tvAddress);
         btnAllmenu = view.findViewById(R.id.btnAllMenu);
         btnReview = view.findViewById(R.id.btnReview);
+        btnBarcode = view.findViewById(R.id.btnBarcode);
         swOpen = view.findViewById(R.id.swOpen);
 
         rvReview = view.findViewById(R.id.rvReview);
@@ -124,6 +126,13 @@ public class RestoDasboardFragment extends Fragment {
                 Bundle data = new Bundle();
                 data.putString("id_restaurant",spManager.getSpIdResto());
                 Tools.addFragment(getActivity(),new AllMenusFragment(), data, "all-menu");
+            }
+        });
+
+        btnBarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.addFragment(getActivity(), new ViewBarcodeFragment(), null, "barcode");
             }
         });
     }

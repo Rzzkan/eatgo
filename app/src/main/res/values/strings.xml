@@ -17,15 +17,15 @@
     <string name="login">Login</string>
 
 
-<!--    <string name="lbl_set_profile_photo">Set Photo</string>-->
-<!--    <string name="lbl_take_camera_picture">Take Image</string>-->
-<!--    <string name="lbl_choose_from_gallery">Pick From Galery</string>-->
-<!--    <string name="toast_image_intent_null">Not Found</string>-->
-<!--    <string name="dialog_permission_title">Give Access</string>-->
-<!--    <string name="dialog_permission_message">This app requires permission to use this feature. You can provide it in app settings.</string>-->
-<!--    <string name="go_to_settings">To Settings</string>-->
-<!--    &lt;!&ndash; TODO: Remove or change this placeholder text &ndash;&gt;-->
-<!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
+    <!--    <string name="lbl_set_profile_photo">Set Photo</string>-->
+    <!--    <string name="lbl_take_camera_picture">Take Image</string>-->
+    <!--    <string name="lbl_choose_from_gallery">Pick From Galery</string>-->
+    <!--    <string name="toast_image_intent_null">Not Found</string>-->
+    <!--    <string name="dialog_permission_title">Give Access</string>-->
+    <!--    <string name="dialog_permission_message">This app requires permission to use this feature. You can provide it in app settings.</string>-->
+    <!--    <string name="go_to_settings">To Settings</string>-->
+    <!--    &lt;!&ndash; TODO: Remove or change this placeholder text &ndash;&gt;-->
+    <!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
 
     <string name="image_picker_provider_authority_suffix" translatable="false">.imagepicker.provider</string>
 
@@ -51,8 +51,9 @@
     <string name="ucrop_rotate">Rotate</string>
     <string name="ucrop_scale">Scale</string>
     <string name="ucrop_crop">Crop</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- uCrop string resource end -->
-
 
 
 </resources>
