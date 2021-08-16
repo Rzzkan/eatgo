@@ -126,7 +126,7 @@ public class AllMenusFragment extends Fragment {
         btnAddMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Tools.addFragment(getActivity(), new AddMenuFragment(), null,"add-menu");
+                Tools.addFragment(getActivity(), new AddMenuFragment(), null,"add-menu");
             }
         });
     }
