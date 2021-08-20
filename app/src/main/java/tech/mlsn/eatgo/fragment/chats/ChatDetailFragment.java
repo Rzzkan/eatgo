@@ -18,7 +18,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +52,8 @@ public class ChatDetailFragment extends Fragment {
     SnackbarHandler snackbar;
     ApiInterface apiInterface;
     SPManager spManager;
+    Boolean condition = false;
+    String currentDateandTime ="";
 
 
     @Override
@@ -81,6 +86,8 @@ public class ChatDetailFragment extends Fragment {
         rvChat.setHasFixedSize(true);
         adapter = new AdapterChat(getContext());
         rvChat.setAdapter(adapter);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        currentDateandTime = sdf.format(new Date());
     }
 
     private void getBundle(){
@@ -90,6 +97,7 @@ public class ChatDetailFragment extends Fragment {
             img = bundle.getString("to_image","");
             id_from = bundle.getString("id_from","1");
             id_to = bundle.getString("id_to","2");
+            condition = bundle.getBoolean("condition", false);
 
             tvName.setText(name);
             if (img.equalsIgnoreCase("")){
@@ -128,6 +136,9 @@ public class ChatDetailFragment extends Fragment {
         final String msg = etMessage.getText().toString();
         if(msg.isEmpty()) return;
         postChatData(msg);
+        if (condition){
+            postBotData("Please Wait for Restaurant Response");
+        }
         adapter.insertItem(new ChatModel(adapter.getItemCount(), msg, true, adapter.getItemCount() % 5 == 0, date));
         etMessage.setText("");
         rvChat.scrollToPosition(adapter.getItemCount() - 1);
@@ -182,7 +193,31 @@ public class ChatDetailFragment extends Fragment {
                 id_from,
                 id_to,
                 message,
-                ""
+                currentDateandTime
+        );
+
+        getChat.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.body().getSuccess()==1) {
+//                    snackbar.snackSuccess("Berhasil Memuat Data");
+                } else{
+                    snackbar.snackError("Failed");
+                }
+            }
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                snackbar.snackError("Post Chat Data : "+t.toString());
+            }
+        });
+    }
+
+    private void postBotData(String message){
+        Call<BaseResponse> getChat = apiInterface.addChat(
+                id_to,
+                id_from,
+                message,
+                currentDateandTime
         );
 
         getChat.enqueue(new Callback<BaseResponse>() {

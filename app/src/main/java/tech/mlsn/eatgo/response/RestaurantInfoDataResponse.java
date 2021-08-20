@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
  * Created by Rzzkan on 03/06/2021.
  */
 public class RestaurantInfoDataResponse {
+    @SerializedName("id_user")
+    @Expose
+    private String idUser;
     @SerializedName("id_restaurant")
     @Expose
     private String idRestaurant;
@@ -34,6 +37,28 @@ public class RestaurantInfoDataResponse {
     @SerializedName("is_active")
     @Expose
     private String isActive;
+
+    public RestaurantInfoDataResponse(String idUser, String idRestaurant, String name, String image, String phone, String address, String link, String latitude, String longitude, String isActive) {
+        this.idUser = idUser;
+        this.idRestaurant = idRestaurant;
+        this.name = name;
+        this.image = image;
+        this.phone = phone;
+        this.address = address;
+        this.link = link;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.isActive = isActive;
+    }
+
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
 
     public String getIdRestaurant() {
         return idRestaurant;
