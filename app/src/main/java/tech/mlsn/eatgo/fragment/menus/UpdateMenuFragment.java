@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -70,6 +71,8 @@ public class UpdateMenuFragment extends Fragment {
     String img="", category="";
     String id_menu="0";
 
+    String active="0";
+
     ArrayList<String> listCategory;
 
     SPManager spManager;
@@ -86,6 +89,7 @@ public class UpdateMenuFragment extends Fragment {
         getData();
         clickListener();
         spinnerListener();
+        swListener();
         return view;
     }
 
@@ -182,7 +186,8 @@ public class UpdateMenuFragment extends Fragment {
                 category,
                 etPrice.getText().toString(),
                 "",
-                img
+                img,
+                active
         );
 
         postRegister.enqueue(new Callback<BaseResponse>() {
@@ -326,5 +331,18 @@ public class UpdateMenuFragment extends Fragment {
         dialog.show();
     }
 
+
+    private void swListener(){
+        swActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    active="1";
+                }else {
+                    active="0";
+                }
+            }
+        });
+    }
 
 }

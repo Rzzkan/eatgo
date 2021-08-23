@@ -107,7 +107,9 @@ public class RestoDasboardFragment extends Fragment {
                         swOpen.setText("Open Restaurant");
                         swOpen.setChecked(false);
                     }
-                    Glide.with(getContext()).load(ApiClient.BASE_URL+ spManager.getSpImgResto()).centerCrop().into(ivBanner);
+                    if(getActivity()!=null){
+                        Glide.with(getActivity()).load(ApiClient.BASE_URL+ spManager.getSpImgResto()).centerCrop().into(ivBanner);
+                    }
                 } else{
                     snackbar.snackError("Failed");
                 }

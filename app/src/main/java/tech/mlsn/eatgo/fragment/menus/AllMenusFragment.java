@@ -148,7 +148,7 @@ public class AllMenusFragment extends Fragment {
                 public void onItemClick(View view, AllMenuDataResponse obj, int position) {
                     Bundle data = new Bundle();
                     data.putString("id_menu", obj.getIdMenu());
-//                    Tools.addFragment(getActivity(), new UpdateMenuFragment(), data, "update-menu");
+                    Tools.addFragment(getActivity(), new UpdateMenuFragment(), data, "update-menu");
                 }
             });
 

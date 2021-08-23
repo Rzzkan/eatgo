@@ -104,7 +104,9 @@ public interface ApiInterface {
             @Field("category") String category,
             @Field("price") String price,
             @Field("point_earned") String point_earned,
-            @Field("image") String img
+            @Field("image") String img,
+            @Field("is_active") String is_active
+
     );
 
 
@@ -187,7 +189,8 @@ public interface ApiInterface {
             @Field("category") String category,
             @Field("price") String price,
             @Field("point_earned") String point_earned,
-            @Field("image") String img
+            @Field("image") String img,
+            @Field("is_active") String is_active
     );
 
     @FormUrlEncoded

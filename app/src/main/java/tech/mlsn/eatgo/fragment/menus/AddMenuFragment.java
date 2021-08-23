@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -70,6 +71,7 @@ public class AddMenuFragment extends Fragment {
     private static final int CAMERA_IMAGE_REQ_CODE = 103;
 
     String img="", category="";
+    String active="0";
 
     ArrayList<String> listCategory;
 
@@ -86,6 +88,7 @@ public class AddMenuFragment extends Fragment {
         initialization(view);
         clickListener();
         spinnerListener();
+        swListener();
         return view;
     }
 
@@ -138,6 +141,19 @@ public class AddMenuFragment extends Fragment {
         });
     }
 
+    private void swListener(){
+        swActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    active="1";
+                }else {
+                    active="0";
+                }
+            }
+        });
+    }
+
 
     private void postAddMenu(){
         Call<BaseResponse> postRegister = apiInterface.addMenu(
@@ -147,7 +163,8 @@ public class AddMenuFragment extends Fragment {
                 category,
                 etPrice.getText().toString(),
                 "",
-                img
+                img,
+                active
         );
 
         postRegister.enqueue(new Callback<BaseResponse>() {
