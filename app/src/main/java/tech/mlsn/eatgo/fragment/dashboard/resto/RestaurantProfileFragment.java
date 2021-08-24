@@ -32,6 +32,7 @@ import tech.mlsn.eatgo.R;
 import tech.mlsn.eatgo.adapter.ReviewAdapter;
 import tech.mlsn.eatgo.adapter.UserDashboardAdapter;
 import tech.mlsn.eatgo.fragment.chats.ChatDetailFragment;
+import tech.mlsn.eatgo.fragment.dashboard.UserDashboardFragment;
 import tech.mlsn.eatgo.fragment.menus.AllMenusFragment;
 import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.network.ApiInterface;
@@ -264,6 +265,8 @@ public class RestaurantProfileFragment extends Fragment {
             public void onClick(View v) {
                 if (!rate.equalsIgnoreCase("0")&&!etReview.getText().toString().isEmpty()){
                     postReview(spManager.getSpId(),id_restaurant,rate,etReview.getText().toString());
+                    dialog.dismiss();
+                    Tools.removeAllFragment(getActivity(),new UserDashboardFragment(), "dashboard");
                 }else {
                     snackbar.snackError("Cant Empty");
                 }

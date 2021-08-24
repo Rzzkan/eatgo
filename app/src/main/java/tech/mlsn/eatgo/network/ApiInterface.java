@@ -172,7 +172,7 @@ public interface ApiInterface {
     );
 
     @FormUrlEncoded
-    @POST("addReview.php")
+    @POST("addRating.php")
     Call<BaseResponse> postAddReview(
             @Field("id_user") String id_user,
             @Field("id_restaurant") String id_restaurant,
