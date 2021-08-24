@@ -2,8 +2,10 @@ package tech.mlsn.eatgo.fragment.account;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Editable;
@@ -18,10 +21,13 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -49,7 +55,8 @@ public class UpdateRestaurantFragment extends Fragment {
     TextInputLayout  lytName,lytAddress, lytLink, lytPhone;
     TextInputEditText etName, etAddress, etLink, etPhone;
 
-    public static final int REQUEST_IMAGE = 100;
+    private static final int GALLERY_IMAGE_REQ_CODE = 102;
+    private static final int CAMERA_IMAGE_REQ_CODE = 103;
     public String img;
 
     SPManager spManager;
@@ -91,45 +98,28 @@ public class UpdateRestaurantFragment extends Fragment {
             etPhone.setText(spManager.getSpPhoneResto());
         }
 
-        if (spManager.getSpImgResto().equalsIgnoreCase("null")){
-            Glide.with(getContext())
-                    .load(R.drawable.ic_baseline_store_24)
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into(imgProfile);
-        }else{
-            Glide.with(getContext())
-                    .load(ApiClient.BASE_URL+spManager.getSpImgResto())
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into(imgProfile);
+        if (getActivity()!=null){
+            if (spManager.getSpImgResto().equalsIgnoreCase("null")){
+                Glide.with(getContext())
+                        .load(R.drawable.ic_baseline_store_24)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .into(imgProfile);
+            }else{
+                Glide.with(getContext())
+                        .load(ApiClient.BASE_URL+spManager.getSpImgResto())
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .into(imgProfile);
+            }
         }
-
     }
 
     private void btnListener(){
         btnChangePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Dexter.withActivity(getActivity())
-//                        .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                        .withListener(new MultiplePermissionsListener() {
-//                            @Override
-//                            public void onPermissionsChecked(MultiplePermissionsReport report) {
-//                                if (report.areAllPermissionsGranted()) {
-//                                    showImagePickerOptions();
-//                                }
-//
-//                                if (report.isAnyPermissionPermanentlyDenied()) {
-//                                    showSettingsDialog();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-//                                token.continuePermissionRequest();
-//                            }
-//                        }).check();
+                showDialog();
             }
         });
 
@@ -148,86 +138,30 @@ public class UpdateRestaurantFragment extends Fragment {
         });
     }
 
-//    private void showImagePickerOptions() {
-//        ImagePickerActivity.showImagePickerOptions(getContext(), new ImagePickerActivity.PickerOptionListener() {
-//            @Override
-//            public void onTakeCameraSelected() {
-//                launchCameraIntent();
-//            }
-//
-//            @Override
-//            public void onChooseGallerySelected() {
-//                launchGalleryIntent();
-//            }
-//        });
-//    }
-//
-//    private void launchCameraIntent() {
-//        Intent intent = new Intent(getActivity(), ImagePickerActivity.class);
-//        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_IMAGE_CAPTURE);
-//
-//        // setting aspect ratio
-//        intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
-//        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 16); // 16x9, 1x1, 3:4, 3:2
-//        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 9);
-//
-//        // setting maximum bitmap width and height
-//        intent.putExtra(ImagePickerActivity.INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT, true);
-//        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 1280);
-//        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 720);
-//
-//        startActivityForResult(intent, REQUEST_IMAGE);
-//    }
-//
-//    private void launchGalleryIntent() {
-//        Intent intent = new Intent(getActivity(), ImagePickerActivity.class);
-//        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_GALLERY_IMAGE);
-//
-//        // setting aspect ratio
-//        intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
-//        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 16); // 16x9, 1x1, 3:4, 3:2
-//        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 9);
-//        startActivityForResult(intent, REQUEST_IMAGE);
-//    }
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_IMAGE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Uri uri = data.getParcelableExtra("path");
-                try {
-                    // You can update this bitmap to your server
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-                    img = encodeTobase64(bitmap);
-                    updateImgDatabase();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        if (resultCode == Activity.RESULT_OK) {
+            // Uri object will not be null for RESULT_OK
+            Uri uri = data.getData();
+            Toast.makeText(getContext(),uri.toString(),Toast.LENGTH_SHORT).show();
+
+            try {
+                // You can update this bitmap to your server
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                Glide.with(getActivity()).load(bitmap).into(imgProfile);
+                updateImgDatabase(encodeTobase64(bitmap));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(getActivity(), ImagePicker.Companion.getError(data), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show();
         }
     }
 
-//    private void showSettingsDialog() {
-//        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
-//        builder.setTitle(getString(R.string.dialog_permission_title));
-//        builder.setMessage(getString(R.string.dialog_permission_message));
-//        builder.setPositiveButton(getString(R.string.go_to_settings), (dialog, which) -> {
-//            dialog.cancel();
-//            openSettings();
-//        });
-//        builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.cancel());
-//        builder.show();
-//
-//    }
-    private void openSettings() {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package",getActivity().getPackageName(), null);
-        intent.setData(uri);
-        startActivityForResult(intent, 101);
-    }
-
-    public void updateImgDatabase(){
+    public void updateImgDatabase(String img){
         Call<UpdateImageResponse> postUpdateImgUser = apiInterface.postUpdateImgResto(
                 spManager.getSpIdResto(),
                 img
@@ -354,6 +288,55 @@ public class UpdateRestaurantFragment extends Fragment {
             }
         });
 
+    }
+
+
+    private void fromGallery(){
+        ImagePicker.Companion.with(this)
+                .crop()
+                .galleryOnly()
+                .galleryMimeTypes(new String[]{"image/png",
+                        "image/jpg",
+                        "image/jpeg"
+                })
+                .start(GALLERY_IMAGE_REQ_CODE);
+    }
+
+    private void fromCamera(){
+        ImagePicker.Companion.with(this)
+                .crop()
+                .cameraOnly()
+                .saveDir(getActivity().getExternalFilesDir(Environment.DIRECTORY_DCIM))
+                .start(CAMERA_IMAGE_REQ_CODE);
+    }
+
+    private void showDialog(){
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_picker);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(true);
+
+        final Button btnCamera = dialog.findViewById(R.id.btnCamera);
+        final Button btnGallery = dialog.findViewById(R.id.btnGalery);
+
+
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fromCamera();
+                dialog.dismiss();
+            }
+        });
+
+        btnGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fromGallery();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
 
