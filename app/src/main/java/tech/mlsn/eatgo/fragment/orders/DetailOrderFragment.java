@@ -188,7 +188,7 @@ public class DetailOrderFragment extends Fragment {
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response.body().getSuccess()==1) {
                     snackbar.snackSuccess("Success");
-                    Tools.removeAllFragment(getActivity(),new OrdersFragment(),"orders");
+                    Tools.removeAllFragment(getActivity(),new AllOrdersFragment(),"orders");
                 } else{
                     snackbar.snackError("Failed");
                 }
