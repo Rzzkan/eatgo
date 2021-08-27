@@ -139,7 +139,7 @@ public class AdapterOrder extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     ArrayList<OrdersDataResponse> filteredList = new ArrayList<>();
                     for (OrdersDataResponse data : items) {
                         String  status = data.getStatus();
-                        if(status.equalsIgnoreCase("3")){
+                        if(status.equalsIgnoreCase("4")){
                             filteredList.add(data);
                         }
                     }

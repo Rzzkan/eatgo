@@ -42,6 +42,7 @@ import tech.mlsn.eatgo.response.restaurant.UserRestaurantDataResponse;
 import tech.mlsn.eatgo.response.review.ReviewDataResponse;
 import tech.mlsn.eatgo.response.review.ReviewResponse;
 import tech.mlsn.eatgo.tools.SPManager;
+import tech.mlsn.eatgo.tools.SQLiteDBHelper;
 import tech.mlsn.eatgo.tools.SnackbarHandler;
 import tech.mlsn.eatgo.tools.Tools;
 
@@ -64,6 +65,7 @@ public class RestaurantProfileFragment extends Fragment {
 
     ReviewAdapter adapter;
     ArrayList<ReviewDataResponse> listReview;
+    SQLiteDBHelper dbHelper;
 
 
     @Override
@@ -81,6 +83,7 @@ public class RestaurantProfileFragment extends Fragment {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         snackbar = new SnackbarHandler(getActivity());
         spManager = new SPManager(getContext());
+        dbHelper = new SQLiteDBHelper(getActivity());
 
         ivBanner = view.findViewById(R.id.ivBanner);
         tvNameRestaurant = view.findViewById(R.id.tvNameRestaurant);
@@ -97,7 +100,7 @@ public class RestaurantProfileFragment extends Fragment {
         listReview = new ArrayList<>();
         adapter = new ReviewAdapter(getContext(), listReview);
         rvReview.setAdapter(adapter);
-
+        dbHelper.deleteDatabase();
     }
 
     private void getData(){

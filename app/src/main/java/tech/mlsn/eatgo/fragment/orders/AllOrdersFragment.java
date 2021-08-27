@@ -195,7 +195,9 @@ public class AllOrdersFragment extends Fragment {
                     tabDoneOrder.setBackground(getActivity().getDrawable(R.drawable.btn_rounded));
                     tabDoneOrder.setTextColor(ContextCompat.getColorStateList(getContext(), R.color.white));
                     status = "4";
+                    Log.d("cek_status", status);
                     adapter.getFilter().filter(status);
+//                    rvOrder.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     break;
 

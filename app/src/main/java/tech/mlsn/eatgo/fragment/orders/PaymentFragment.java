@@ -183,6 +183,7 @@ public class PaymentFragment extends Fragment {
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response.body().getSuccess()==1) {
                     snackbar.snackSuccess("Success");
+                    dbHelper.deleteDatabase();
                     Tools.removeAllFragment(getActivity(), new HistoryOrderFragment(),"history");
                 } else{
                     snackbar.snackError("Failed");
