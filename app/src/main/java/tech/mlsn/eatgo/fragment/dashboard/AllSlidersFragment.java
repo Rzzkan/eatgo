@@ -125,6 +125,7 @@ public class AllSlidersFragment extends Fragment {
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response.body().getSuccess()==1) {
                     snackbar.snackSuccess("Success");
+                    Tools.removeAllFragment(getActivity(), new AdminDashboardFragment(), "admin");
                 } else{
                     snackbar.snackError("Failed");
                 }

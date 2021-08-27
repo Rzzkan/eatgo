@@ -282,4 +282,11 @@ public interface ApiInterface {
             @Field("payment") String  payment,
             @Field("date") String  date
     );
+
+    @FormUrlEncoded
+    @POST("addSlider.php")
+    Call<BaseResponse>addSlider(
+            @Field("name") String name,
+            @Field("img") String  img
+    );
 }

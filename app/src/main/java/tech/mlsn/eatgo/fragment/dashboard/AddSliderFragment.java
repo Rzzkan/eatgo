@@ -27,7 +27,10 @@ import com.bumptech.glide.Glide;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,9 +38,11 @@ import retrofit2.Response;
 import tech.mlsn.eatgo.R;
 import tech.mlsn.eatgo.network.ApiClient;
 import tech.mlsn.eatgo.network.ApiInterface;
-import tech.mlsn.eatgo.response.profile.UpdateImageResponse;
+import tech.mlsn.eatgo.response.BaseResponse;
+import tech.mlsn.eatgo.response.BaseResponse;
 import tech.mlsn.eatgo.tools.SPManager;
 import tech.mlsn.eatgo.tools.SnackbarHandler;
+import tech.mlsn.eatgo.tools.Tools;
 
 import static tech.mlsn.eatgo.tools.Base64Helper.encodeTobase64;
 
@@ -53,6 +58,7 @@ public class AddSliderFragment extends Fragment {
 
     private static final int GALLERY_IMAGE_REQ_CODE = 102;
     private static final int CAMERA_IMAGE_REQ_CODE = 103;
+    String currentDateandTime ="";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +78,8 @@ public class AddSliderFragment extends Fragment {
         btnPick = view.findViewById(R.id.btnPick);
         btnSave = view.findViewById(R.id.btnSave);
         ivPreview = view.findViewById(R.id.ivPreview);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        currentDateandTime = sdf.format(new Date());
     }
 
     private void btnListener(){
@@ -91,22 +99,23 @@ public class AddSliderFragment extends Fragment {
     }
 
     public void updateImgDatabase(String img){
-        Call<UpdateImageResponse> postUpdateImgUser = apiInterface.postUpdateImgResto(
-                spManager.getSpIdResto(),
+        Call<BaseResponse> postUpdateImgUser = apiInterface.addSlider(
+                currentDateandTime,
                 img
         );
 
-        postUpdateImgUser.enqueue(new Callback<UpdateImageResponse>() {
+        postUpdateImgUser.enqueue(new Callback<BaseResponse>() {
             @Override
-            public void onResponse(Call<UpdateImageResponse> call, Response<UpdateImageResponse> response) {
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response.body().getSuccess()==1) {
                     snackbar.snackSuccess("Success");
+                    Tools.removeAllFragment(getActivity(), new AdminDashboardFragment(),"admin dashboard");
                 }else {
                     snackbar.snackError("Failed");
                 }
             }
             @Override
-            public void onFailure(Call<UpdateImageResponse> call, Throwable t) {
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
 
             }
         });
