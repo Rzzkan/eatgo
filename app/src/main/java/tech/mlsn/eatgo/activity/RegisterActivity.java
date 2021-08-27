@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     RadioButton rbUser, rbResto;
     Button btnRegister;
 
-    String role ="";
+    String role ="user";
 
     SPManager spManager;
     SnackbarHandler snackbar;
