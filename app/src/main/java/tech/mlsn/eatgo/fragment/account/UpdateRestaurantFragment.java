@@ -225,6 +225,10 @@ public class UpdateRestaurantFragment extends Fragment {
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response.body().getSuccess()==1) {
                     snackbar.snackSuccess("Success");
+                    spManager.saveSPString(spManager.SP_NAME_RESTO, etName.getText().toString());
+                    spManager.saveSPString(spManager.SP_ADDRESS_RESTO, etAddress.getText().toString());
+                    spManager.saveSPString(spManager.SP_LINK_RESTO, etLink.getText().toString());
+                    spManager.saveSPString(spManager.SP_PHONE_RESTO, etPhone.getText().toString());
                     Tools.removeAllFragment(getActivity(), new ProfileFragment(),"profile");
                 } else{
                     snackbar.snackError("Failed");

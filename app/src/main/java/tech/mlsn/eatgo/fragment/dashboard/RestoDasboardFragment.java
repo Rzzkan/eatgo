@@ -100,6 +100,7 @@ public class RestoDasboardFragment extends Fragment {
                     snackbar.snackSuccess("Success");
                     tvNameRestaurant.setText(response.body().getData().getName());
                     tvAddress.setText(response.body().getData().getAddress());
+                    spManager.saveSPString(spManager.SP_PHONE_RESTO, response.body().getData().getPhone());
                     if (response.body().getData().getIsActive().equalsIgnoreCase("1")){
                         swOpen.setText("Close Restaurant");
                         swOpen.setChecked(true);

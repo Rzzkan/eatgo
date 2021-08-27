@@ -96,9 +96,14 @@ public class OrdersFragment extends Fragment {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle data = new Bundle();
-                data.putString("id_restaurant", id_restaurant);
-                Tools.addFragment(getActivity(), new PaymentFragment(), data, "payment");
+                if (dbHelper.countTotal()!=0){
+                    Bundle data = new Bundle();
+                    data.putString("id_restaurant", id_restaurant);
+                    Tools.addFragment(getActivity(), new PaymentFragment(), data, "payment");
+                }else {
+                    snackbar.snackInfo("Have to choose menu !");
+                }
+
             }
         });
 

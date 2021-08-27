@@ -99,7 +99,8 @@ public class UpdateProfileFragment extends Fragment {
         etPhone.setText(spManager.getSpPhone());
         etAddress.setText(spManager.getSpAddress());
 
-        if (spManager.getSpImg().equalsIgnoreCase("null")){
+        if (getActivity()!=null){
+                 if (spManager.getSpImg().equalsIgnoreCase("null")){
             Glide.with(getContext())
                     .load(R.drawable.ic_baseline_person_24)
                     .centerCrop()
@@ -111,6 +112,7 @@ public class UpdateProfileFragment extends Fragment {
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(imgProfile);
+        }
         }
     }
 
