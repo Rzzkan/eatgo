@@ -238,8 +238,13 @@ public interface ApiInterface {
     );
 
 
-    @GET("allOrders.php")
-    Call<OrdersResponse>getAllOrders();
+
+
+    @FormUrlEncoded
+    @POST("allOrders.php")
+    Call<OrdersResponse>getAllOrders(
+            @Field("id_restaurant") String id_restaurant
+    );
 
     @FormUrlEncoded
     @POST("getOrderUser.php")

@@ -83,7 +83,9 @@ public class AllOrdersFragment extends Fragment {
     }
 
     private void getData(){
-        Call<OrdersResponse> allOrders = apiInterface.getAllOrders();
+        Call<OrdersResponse> allOrders = apiInterface.getAllOrders(
+                spManager.getSpIdResto()
+        );
 
         allOrders.enqueue(new Callback<OrdersResponse>() {
             @Override
