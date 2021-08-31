@@ -126,6 +126,25 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    private void checkUsername(){
+        Call<BaseResponse> postRegister = apiInterface.isUsernameExist(
+                etUsername.getText().toString()
+        );
+
+        postRegister.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.body().getSuccess()==1) {
+                    lytUsername.setError("Username Already Taken");
+                }
+            }
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                snackbar.snackInfo("No Connection");
+            }
+        });
+    }
+
     private void inputListener(){
         etPhone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -151,27 +170,142 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        etUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (lytUsername.isErrorEnabled()){
+                    lytUsername.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().isEmpty()){
+                    checkUsername();
+                }
+            }
+        });
+
+        etAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (lytAddress.isErrorEnabled()){
+                    lytAddress.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+       etPassword.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+           }
+
+           @Override
+           public void onTextChanged(CharSequence s, int start, int before, int count) {
+               if (lytPassword.isErrorEnabled()){
+                   lytPassword.setErrorEnabled(false);
+               }
+           }
+
+           @Override
+           public void afterTextChanged(Editable s) {
+
+           }
+       });
+
+       etAddress.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+           }
+
+           @Override
+           public void onTextChanged(CharSequence s, int start, int before, int count) {
+               if (lytAddress.isErrorEnabled()){
+                   lytAddress.setErrorEnabled(false);
+               }
+           }
+
+           @Override
+           public void afterTextChanged(Editable s) {
+
+           }
+       });
+
     }
 
     private Boolean validate(){
         boolean valid = true;
-        if (etName.getText().toString().isEmpty()||
-                etAddress.getText().toString().isEmpty()||
-                etPhone.getText().toString().isEmpty()||
-                etPassword.getText().toString().isEmpty()||
-                etAddress.getText().toString().isEmpty()||
-                etUsername.getText().toString().isEmpty()
+
+        if (etName.getText().toString().isEmpty()
         ){
-            snackbar.snackInfo("Please make sure if there are no empty field");
+            lytName.setError("Cant Empty !");
             valid = false;
         }
+
+        if (etUsername.getText().toString().isEmpty()
+        ){
+            lytUsername.setError("Cant Empty !");
+            valid = false;
+        }
+
+        if (etAddress.getText().toString().isEmpty()
+        ){
+            lytAddress.setError("Cant Empty !");
+            valid = false;
+        }
+
+        if (etPassword.getText().toString().isEmpty()
+        ){
+            lytPassword.setError("Cant Empty !");
+            valid = false;
+        }
+
+        if (etAddress.getText().toString().isEmpty()
+        ){
+            lytAddress.setError("Cant Empty !");
+            valid = false;
+        }
+
+        if (etPhone.getText().toString().isEmpty()
+        ){
+            lytPhone.setError("Cant Empty !");
+            valid = false;
+        }
+
+//        if (etName.getText().toString().isEmpty()||
+//                etAddress.getText().toString().isEmpty()||
+//                etPhone.getText().toString().isEmpty()||
+//                etPassword.getText().toString().isEmpty()||
+//                etAddress.getText().toString().isEmpty()||
+//                etUsername.getText().toString().isEmpty()
+//        ){
+//            snackbar.snackInfo("Please make sure if there are no empty field");
+//            valid = false;
+//        }
 
         if (role.equalsIgnoreCase("")){
             valid = false;
         }
 
         if (!etPhone.getText().toString().matches("^[1-9][0-9]*$")){
-            lytPhone.setError("Numbers Must not start with 0");
+            lytPhone.setError("Numbers Must not start with 0 !");
             valid = false;
         }
         return valid;

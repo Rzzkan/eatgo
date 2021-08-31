@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initialization();
+        inputListener();
         btnListener();
     }
 
@@ -130,14 +133,60 @@ public class LoginActivity extends AppCompatActivity {
     private Boolean validate(){
         boolean valid = true;
         if (
-                etPassword.getText().toString().isEmpty()||
                 etUsername.getText().toString().isEmpty()
         ){
-            snackbar.snackInfo("Please make sure if there are no empty field");
+            lytUsername.setError("Cant Empty !");
+            valid = false;
+        }
+
+        if (
+                etPassword.getText().toString().isEmpty()
+        ){
+            lytPassword.setError("Cant Empty !");
             valid = false;
         }
 
         return valid;
+    }
+
+    private void inputListener(){
+        etUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (lytUsername.isErrorEnabled()){
+                    lytUsername.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (lytPassword.isErrorEnabled()){
+                    lytPassword.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 

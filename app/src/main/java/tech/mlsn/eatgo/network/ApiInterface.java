@@ -28,6 +28,12 @@ import tech.mlsn.eatgo.response.user.UsersResponse;
 public interface ApiInterface {
 
     @FormUrlEncoded
+    @POST("isUsernameExist.php")
+    Call<BaseResponse> isUsernameExist(
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
     @POST("login.php")
     Call<LoginResponse> postLogin(
             @Field("username") String username,
