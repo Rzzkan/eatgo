@@ -76,7 +76,7 @@ public class AdapterChat extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ItemViewHolder vItem = (ItemViewHolder) holder;
             vItem.text_content.setText(m.getContent());
 //            vItem.text_time.setText(Tools.dateParserChat(m.getDate()));
-            vItem.text_time.setVisibility(m.isShowTime() ? View.VISIBLE : View.GONE);
+//            vItem.text_time.setVisibility(m.isShowTime() ? View.VISIBLE : View.GONE);
             if (position == getItemCount() - 1 && m.isFromMe()) {
                 vItem.lyt_read.setVisibility(View.VISIBLE);
             } else {

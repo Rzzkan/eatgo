@@ -51,7 +51,7 @@ public class PaymentFragment extends Fragment {
     TextView tvEG;
     Button btnConfirm;
     String id_restaurant="";
-    String payment ="";
+    String payment ="Cash";
     ArrayList<String> listMenu;
     ArrayList<String> listPrice;
     ArrayList<String> listQty;

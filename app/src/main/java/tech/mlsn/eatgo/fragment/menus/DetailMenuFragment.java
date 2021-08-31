@@ -25,6 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tech.mlsn.eatgo.R;
+import tech.mlsn.eatgo.fragment.dashboard.resto.RestaurantMenuFragment;
 import tech.mlsn.eatgo.fragment.orders.OrdersFragment;
 import tech.mlsn.eatgo.model.CartModel;
 import tech.mlsn.eatgo.network.ApiClient;
@@ -162,7 +163,7 @@ public class DetailMenuFragment extends Fragment {
                 dialog.dismiss();
                 Bundle data = new Bundle();
                 data.putString("id_restaurant", id_restaurant);
-                Tools.addFragment(getActivity(), new AllMenusFragment(), data, "all-menus");
+                Tools.addFragment(getActivity(), new RestaurantMenuFragment(), data, "all-menus");
             }
         },2000);
     }
