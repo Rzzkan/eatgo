@@ -73,7 +73,9 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postLogin();
+                if (validate()){
+                    postLogin();
+                }
             }
         });
 
@@ -123,6 +125,19 @@ public class LoginActivity extends AppCompatActivity {
                 snackbar.snackInfo("No Connection");
             }
         });
+    }
+
+    private Boolean validate(){
+        boolean valid = true;
+        if (
+                etPassword.getText().toString().isEmpty()||
+                etUsername.getText().toString().isEmpty()
+        ){
+            snackbar.snackInfo("Please make sure if there are no empty field");
+            valid = false;
+        }
+
+        return valid;
     }
 
 

@@ -60,6 +60,7 @@ public class RestaurantProfileFragment extends Fragment {
 
     String id_restaurant="", phone="";
     String id_user_restaurant ="";
+    String resto_name="";
     String  latitude="0", longitude="0";
     String rate="0";
 
@@ -144,6 +145,7 @@ public class RestaurantProfileFragment extends Fragment {
                 data.putString("id_restaurant",id_restaurant);
                 data.putString("id_from",spManager.getSpId());
                 data.putString("id_to",id_user_restaurant);
+                data.putString("to_name",resto_name);
                 data.putBoolean("condition", true);
                 Tools.addFragment(getActivity(), new ChatDetailFragment(),data,"chat");
             }
@@ -175,6 +177,7 @@ public class RestaurantProfileFragment extends Fragment {
                     latitude = response.body().getData().getLatitude();
                     longitude = response.body().getData().getLongitude();
                     id_user_restaurant = response.body().getData().getIdUser();
+                    resto_name = response.body().getData().getName();
                 } else{
                     snackbar.snackError("Failed");
                 }
