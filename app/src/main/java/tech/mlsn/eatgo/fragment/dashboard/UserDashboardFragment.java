@@ -30,6 +30,8 @@ import android.widget.Toast;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -138,6 +140,13 @@ public class UserDashboardFragment extends Fragment  {
                                 data.getDistance(),
                                 data.getIsActive()
                         ));
+                        Collections.sort(listResto, new Comparator<UserRestaurantDataResponse>() {
+                            @Override
+                            public int compare(UserRestaurantDataResponse c1, UserRestaurantDataResponse c2) {
+                                return Double.compare(c1.getDistance(), c2.getDistance());
+                            }
+                        });
+
                         adapter.notifyDataSetChanged();
                     }
                     snackbar.snackSuccess("Success");
