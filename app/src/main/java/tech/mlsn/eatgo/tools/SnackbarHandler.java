@@ -31,7 +31,7 @@ public class SnackbarHandler {
         ImageView icon =  ((ImageView) custom_view.findViewById(R.id.icon));
         (custom_view.findViewById(R.id.parent_view)).setBackgroundColor(mActivity.getResources().getColor(R.color.color_error));
         snackBarView.addView(custom_view, 0);
-//        snackbar.show();
+        snackbar.show();
     }
 
     public void snackSuccess(String message) {
@@ -47,7 +47,7 @@ public class SnackbarHandler {
         ImageView icon =  ((ImageView) custom_view.findViewById(R.id.icon));
         (custom_view.findViewById(R.id.parent_view)).setBackgroundColor(mActivity.getResources().getColor(R.color.color_success));
         snackBarView.addView(custom_view, 0);
-//        snackbar.show();
+        snackbar.show();
     }
 
     public void snackInfo( String message) {
