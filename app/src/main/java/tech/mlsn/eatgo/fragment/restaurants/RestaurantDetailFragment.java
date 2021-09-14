@@ -110,6 +110,9 @@ public class RestaurantDetailFragment extends Fragment {
             public void onClick(View v) {
                 Bundle data = new Bundle();
                 data.putString("id_restaurant",id_restaurant);
+                data.putString("latitude", latitude);
+                data.putString("longitude", longitude);
+                data.putString("is_active", is_active);
                 Tools.addFragment(getActivity(), new UpdateRestoFragment(), data, "resto-update");
             }
         });
