@@ -25,6 +25,7 @@ import tech.mlsn.eatgo.response.review.ReviewDataResponse;
 import tech.mlsn.eatgo.response.review.ReviewResponse;
 import tech.mlsn.eatgo.tools.SPManager;
 import tech.mlsn.eatgo.tools.SnackbarHandler;
+import tech.mlsn.eatgo.tools.Tools;
 
 public class UpdateRestoFragment extends Fragment {
     Button btnSave;
@@ -117,8 +118,8 @@ public class UpdateRestoFragment extends Fragment {
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response.body().getSuccess()==1) {
+                    Tools.removeAllFragment(getActivity(), new AllRestaurantFragment(), "resto");
                     snackbar.snackSuccess("Success");
-
                 } else{
                     snackbar.snackError("Failed");
                 }
